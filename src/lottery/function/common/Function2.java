@@ -16,7 +16,7 @@ import lottery.util.LotteryConst;
  */
 public class Function2 implements Function {
 
-	public class Ball implements Comparable<Ball> {
+	public static class Ball implements Comparable<Ball> {
 		int number;
 		int count;
 		int position;

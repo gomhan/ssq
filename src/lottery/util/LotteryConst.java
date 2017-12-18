@@ -1,6 +1,7 @@
 package lottery.util;
 
 import java.awt.Color;
+import java.io.File;
 import java.text.DecimalFormat;
 
 public class LotteryConst {
@@ -34,4 +35,7 @@ public class LotteryConst {
 	public static final int MENU_INDEX_4 = 4;
 	/** main panel menu item index 5 */
 	public static final int MENU_INDEX_5 = 5;
+	
+	public static final String PROJECT_PATH = System.getProperty("user.dir")
+			+ File.separatorChar;
 }

@@ -25,10 +25,6 @@ public abstract class FunctionMenu extends JMenuItem implements ActionListener,
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * sub class do not overwrite this method.<br>
-	 * if sub class have to overwrite it, call method should be overwrite too.
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

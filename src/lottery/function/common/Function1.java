@@ -16,7 +16,7 @@ import lottery.util.LotteryConst;
  */
 public class Function1 implements Function {
 
-	public class SummationCount implements Comparable<SummationCount> {
+	public static class SummationCount implements Comparable<SummationCount> {
 		Integer summation;
 		Integer count;
 		List<DoubleChromosphere> dc;

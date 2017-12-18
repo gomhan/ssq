@@ -2,6 +2,7 @@ package lottery.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -19,10 +21,13 @@ import javax.swing.table.TableRowSorter;
 
 import lottery.model.LotteryModel;
 import lottery.model.LotteryTableModel;
+import lottery.util.Context;
 import lottery.util.LotteryConst;
+import lottery.util.XML;
 import lottery.view.menu.common.Func1BarChartMenu;
 import lottery.view.menu.common.Func1TableMenu;
 import lottery.view.menu.common.Func2TableMenu;
+import lottery.view.menu.shortterm.Func3TableMenu;
 import lottery.view.renderer.LotteryTableRenderer;
 
 public class LotteryWindow extends JFrame {
@@ -76,8 +81,8 @@ public class LotteryWindow extends JFrame {
 		LotteryTableRenderer renderer = new LotteryTableRenderer() {
 			@Override
 			protected void customizeRenderer(JTable table, Object value,
-					boolean isSelected, boolean hasFocus, int row, int column) {
-				// TODO Auto-generated method stub
+					boolean isSelected, boolean hasFocus, int row, int column,
+					Component renderComponent) {
 				if (column > 2 && column < 9) {
 					setForeground(Color.RED);
 				}
@@ -124,6 +129,20 @@ public class LotteryWindow extends JFrame {
 		});
 		menu.add(m);
 		menu.addSeparator();
+
+		m = new JMenuItem("导出");
+		m.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				XML xml = new XML();
+				xml.createLotteryXML(Context.getInstance().getLottery()
+						.getLottery(), LotteryConst.PROJECT_PATH + "ssq.xml");
+				JOptionPane.showConfirmDialog(LotteryWindow.this, "导出成功", "消息",
+						JOptionPane.CLOSED_OPTION);
+			}
+		});
+		menu.add(m);
 	}
 
 	private void registerCommonFunctionMenu() {
@@ -141,8 +160,10 @@ public class LotteryWindow extends JFrame {
 	}
 
 	private void registerShortTermMenu() {
-		// JMenu menu = menuBar.getMenu(LotteryConst.MENU_INDEX_2);
-		// JMenuItem m;
+		JMenu menu = menuBar.getMenu(LotteryConst.MENU_INDEX_2);
+		JMenuItem m;
+		m = new Func3TableMenu();
+		menu.add(m);
 	}
 
 	private void registerMidTermMenu() {

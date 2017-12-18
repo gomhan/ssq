@@ -2,6 +2,7 @@ package lottery.view.funcview;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,8 +93,8 @@ public class Func1InTableFrame extends JFrame {
 		LotteryTableRenderer renderer = new LotteryTableRenderer() {
 			@Override
 			protected void customizeRenderer(JTable table, Object value,
-					boolean isSelected, boolean hasFocus, int row, int column) {
-				// TODO Auto-generated method stub
+					boolean isSelected, boolean hasFocus, int row, int column,
+					Component renderComponent) {
 				if (column == 1) {
 					Integer count = (Integer) value;
 					if (count == 0) {

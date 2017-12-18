@@ -8,14 +8,15 @@ import lottery.itf.Function;
 import lottery.itf.Result;
 import lottery.model.DoubleChromosphere;
 import lottery.model.State;
+import lottery.util.LotteryConst;
 
 /**
  * ÆæÅ¼Æ«²î
  */
 public class Function3 implements Function {
 
-	public class OddEvenNumber {
-		int issue;
+	public static class OddEvenNumber {
+		String issue;
 		String numberString;
 		int oddNumber;
 		int evenNumber;
@@ -28,14 +29,14 @@ public class Function3 implements Function {
 			return evenNumber;
 		}
 
-		public int getIssue() {
+		public String getIssue() {
 			return issue;
 		}
 
 		public String getNumberString() {
 			return numberString;
 		}
-
+		
 	}
 
 	public final static String NAME = "Function3";
@@ -63,6 +64,9 @@ public class Function3 implements Function {
 	@Override
 	public Result getResult(int identifier) {
 		// TODO Auto-generated method stub
+		if (identifier == LotteryConst.DEFAULT_IDENTIFIER) {
+			return fr;
+		}
 		return Result.NULL;
 	}
 
@@ -70,13 +74,54 @@ public class Function3 implements Function {
 	public State invoke(List<DoubleChromosphere> parameter) {
 		// TODO Auto-generated method stub
 		clearValue();
-		return null;
+		OddEvenNumber oe;
+		for (DoubleChromosphere dc : parameter) {
+			oe = new OddEvenNumber();
+			oe.issue = dc.getIssue();
+			oe.numberString = dc.getRedString();
+			int even = 0;
+			if (dc.getRed1() % 2 == 0) {
+				oe.evenNumber++;
+			} else {
+				oe.oddNumber++;
+			}
+			if (dc.getRed2() % 2 == 0) {
+				oe.evenNumber++;
+			} else {
+				oe.oddNumber++;
+			}
+			if (dc.getRed3() % 2 == 0) {
+				oe.evenNumber++;
+			} else {
+				oe.oddNumber++;
+			}
+			if (dc.getRed4() % 2 == 0) {
+				oe.evenNumber++;
+			} else {
+				oe.oddNumber++;
+			}
+			if (dc.getRed5() % 2 == 0) {
+				oe.evenNumber++;
+			} else {
+				oe.oddNumber++;
+			}
+			if (dc.getRed6() % 2 == 0) {
+				oe.evenNumber++;
+			} else {
+				oe.oddNumber++;
+			}
+			number.add(oe);
+		}
+		fr.setValue(number);
+		return State.SUCCESS;
 	}
 
 	@Override
 	public void clearValue() {
 		// TODO Auto-generated method stub
-
+		if (number != null) {
+			number.clear();
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ package lottery.start;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
@@ -12,9 +13,12 @@ import javax.swing.plaf.FontUIResource;
 
 import lottery.function.DefaultFunctionExecutor;
 import lottery.itf.FunctionExecutor;
+import lottery.model.DoubleChromosphere;
 import lottery.model.LotteryModel;
 import lottery.util.Context;
 import lottery.util.Excel;
+import lottery.util.LotteryConst;
+import lottery.util.XML;
 import lottery.view.LotteryWindow;
 
 public class Start {
@@ -24,7 +28,7 @@ public class Start {
 
 	}
 
-	public void startup() {
+	public void startupWithExcel() {
 		String path = new StringBuilder()
 				.append(System.getProperty("user.dir"))
 				.append(File.separatorChar).append("ssqexcle_result.xls")
@@ -37,6 +41,30 @@ public class Start {
 			LotteryModel model = new LotteryModel();
 			model.setLottery(excel.result());
 			excel.uninstall();
+			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
+			final LotteryWindow window = new LotteryWindow(model);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					window.display();
+				}
+			});
+		} else {
+			System.out.println("load file failed.");
+		}
+	}
+
+	public void startupWithXml() {
+		String path = new StringBuilder().append(LotteryConst.PROJECT_PATH)
+				.append("ssq.xml").toString();
+		XML xml = new XML();
+		List<DoubleChromosphere> dcs = xml.parseLotteryXML(path);
+		if (dcs != null && dcs.size() > 0) {
+			FunctionExecutor fe = new DefaultFunctionExecutor();
+			Context.getInstance().putObject(Context.EXECUTOR, fe);
+			LotteryModel model = new LotteryModel();
+			model.setLottery(dcs);
 			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
 			final LotteryWindow window = new LotteryWindow(model);
 			SwingUtilities.invokeLater(new Runnable() {
@@ -83,6 +111,7 @@ public class Start {
 		UIManager.put("Viewport.background", Color.white);
 		UIManager.put("Table.dropLineColor", Color.black);
 		UIManager.put("Table.dropLineShortColor", Color.black);
-		new Start().startup();
+		// new Start().startupWithExcel();
+		new Start().startupWithXml();
 	}
 }

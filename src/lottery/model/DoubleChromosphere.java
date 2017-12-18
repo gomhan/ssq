@@ -5,7 +5,8 @@ import lottery.itf.NumericLottery;
 /**
  * 6 on 33 with one special number
  */
-public class DoubleChromosphere implements NumericLottery, Comparable<DoubleChromosphere> {
+public class DoubleChromosphere implements NumericLottery,
+		Comparable<DoubleChromosphere> {
 	private String issue;
 	private String time;
 	private byte red1;
@@ -30,12 +31,18 @@ public class DoubleChromosphere implements NumericLottery, Comparable<DoubleChro
 				.append(red5).append("|").append(red6).append("|").append(blue)
 				.append("|").append(summation).append("]").toString();
 	}
-	
+
 	public String getRedString() {
-		return new StringBuilder().append("[").append(red1).append(",")
-				.append(red2).append(",").append(red3).append(",").append(red4)
-				.append(",").append(red5).append(",").append(red6).append("]")
-				.toString();
+		return new StringBuilder().append(getAlignString(red1)).append(",")
+				.append(getAlignString(red2)).append(",")
+				.append(getAlignString(red3)).append(",")
+				.append(getAlignString(red4)).append(",")
+				.append(getAlignString(red5)).append(",")
+				.append(getAlignString(red6)).toString();
+	}
+
+	private String getAlignString(int i) {
+		return i < 10 ? "0" + i : Integer.toString(i);
 	}
 
 	@Override
