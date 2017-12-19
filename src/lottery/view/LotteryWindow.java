@@ -3,17 +3,21 @@ package lottery.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -28,6 +32,7 @@ import lottery.view.menu.common.Func1BarChartMenu;
 import lottery.view.menu.common.Func1TableMenu;
 import lottery.view.menu.common.Func2TableMenu;
 import lottery.view.menu.shortterm.Func3TableMenu;
+import lottery.view.menu.shortterm.Func4TableMenu;
 import lottery.view.renderer.LotteryTableRenderer;
 
 public class LotteryWindow extends JFrame {
@@ -164,6 +169,9 @@ public class LotteryWindow extends JFrame {
 		JMenuItem m;
 		m = new Func3TableMenu();
 		menu.add(m);
+		menu.addSeparator();
+		m = new Func4TableMenu();
+		menu.add(m);
 	}
 
 	private void registerMidTermMenu() {
@@ -187,6 +195,10 @@ public class LotteryWindow extends JFrame {
 		jsp.setViewportView(table);
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(jsp, BorderLayout.CENTER);
+		
+		JLabel label = new JLabel("6选33范围：最有希望和数值102，最有希望范围[73 - 125]");
+		label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		getContentPane().add(label, BorderLayout.SOUTH);
 	}
 
 	public void close() {

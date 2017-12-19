@@ -11,18 +11,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import lottery.function.FunctionResult;
-import lottery.function.shortterm.Function3;
-import lottery.function.shortterm.Function3.OddEvenNumber;
+import lottery.function.shortterm.Function4;
+import lottery.function.shortterm.Function4.LowHighNumber;
 import lottery.itf.Function;
 import lottery.model.DoubleChromosphere;
 import lottery.util.Context;
 import lottery.util.LotteryConst;
-import lottery.view.funcview.Func3InTableFrame;
+import lottery.view.funcview.Func4InTableFrame;
 import lottery.view.menu.FunctionMenu;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Func3TableMenu extends FunctionMenu {
+public class Func4TableMenu extends FunctionMenu {
 	
 	JTextField field;
 	JLabel label;
@@ -30,15 +30,15 @@ public class Func3TableMenu extends FunctionMenu {
 	int issue;
 	Function function;
 	
-	public Func3TableMenu() {
+	public Func4TableMenu() {
 		// TODO Auto-generated constructor stub
 		super();
-		setName("Func3TableMenu");
-		setText("奇偶偏差");
+		setName("Func4TableMenu");
+		setText("大小偏差");
 		field = new JTextField(5);
 		field.setText("10");
 		addActionListener(this);
-		function = new Function3();
+		function = new Function4();
 
 		label = new JLabel("[期数：");
 		label2 = new JLabel("]");
@@ -58,8 +58,8 @@ public class Func3TableMenu extends FunctionMenu {
 	@Override
 	public void showChart(FunctionResult fr) {
 		// TODO Auto-generated method stub
-		Func3InTableFrame frame = new Func3InTableFrame(
-				(List<OddEvenNumber>) fr.getValue(), issue);
+		Func4InTableFrame frame = new Func4InTableFrame(
+				(List<LowHighNumber>) fr.getValue(), issue);
 		frame.display();
 	}
 

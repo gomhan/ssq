@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import lottery.function.FunctionResult;
-import lottery.itf.Function;
-import lottery.itf.Result;
+import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
 import lottery.model.State;
-import lottery.util.LotteryConst;
 
 /**
  * 和数值统计
  */
-public class Function1 implements Function {
+public class Function1 extends AbstractFunction {
 
 	public static class SummationCount implements Comparable<SummationCount> {
 		Integer summation;
@@ -40,26 +37,13 @@ public class Function1 implements Function {
 		}
 	}
 
-	public final static String NAME = "Function1";
-	private final int id;
 	private List<SummationCount> scs;
-	private FunctionResult fr;
 
 	public Function1() {
 		// TODO Auto-generated constructor stub
+		super();
+		name = "Function1";
 		scs = new ArrayList<>();
-		id = ID_GENERATOR.getAndIncrement();
-		fr = new FunctionResult();
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return NAME;
 	}
 
 	@Override
@@ -118,15 +102,6 @@ public class Function1 implements Function {
 		if (scs != null) {
 			scs.clear();
 		}
-	}
-
-	@Override
-	public Result getResult(int identifier) {
-		// TODO Auto-generated method stub
-		if (identifier == LotteryConst.DEFAULT_IDENTIFIER) {
-			return fr;
-		}
-		return Result.NULL;
 	}
 
 }

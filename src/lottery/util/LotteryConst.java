@@ -38,4 +38,6 @@ public class LotteryConst {
 	
 	public static final String PROJECT_PATH = System.getProperty("user.dir")
 			+ File.separatorChar;
+	
+	public static final int LOW_HIGH_SEPARATOR = 17;
 }

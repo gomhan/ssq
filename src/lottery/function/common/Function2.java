@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import lottery.function.FunctionResult;
-import lottery.itf.Function;
-import lottery.itf.Result;
+import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
 import lottery.model.State;
 import lottery.util.LotteryConst;
@@ -14,7 +12,7 @@ import lottery.util.LotteryConst;
 /**
  * 中奖数字情况统计
  */
-public class Function2 implements Function {
+public class Function2 extends AbstractFunction {
 
 	public static class Ball implements Comparable<Ball> {
 		int number;
@@ -45,35 +43,13 @@ public class Function2 implements Function {
 		}
 	}
 
-	public final static String NAME = "Function2";
-	private final int id;
 	private List<Ball> balls;
-	private FunctionResult fr;
 
 	public Function2() {
 		// TODO Auto-generated constructor stub
-		id = ID_GENERATOR.getAndIncrement();
+		super();
+		name = "Function2";
 		balls = new ArrayList<Ball>(LotteryConst.RED_BALL_COUNT);
-		fr = new FunctionResult();
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return NAME;
-	}
-
-	@Override
-	public Result getResult(int identifier) {
-		// TODO Auto-generated method stub
-		if (identifier == LotteryConst.DEFAULT_IDENTIFIER) {
-			return fr;
-		}
-		return Result.NULL;
 	}
 
 	@Override
