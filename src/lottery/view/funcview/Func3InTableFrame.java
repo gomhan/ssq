@@ -11,14 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import lottery.function.shortterm.Function3;
 import lottery.function.shortterm.Function3.OddEvenNumber;
 import lottery.view.renderer.LotteryTableRenderer;
+import lottery.view.table.DefaultTable;
 
 public class Func3InTableFrame extends JFrame {
 	/**
@@ -109,15 +108,12 @@ public class Func3InTableFrame extends JFrame {
 	private void initialize() {
 		// TODO Auto-generated method stub
 		Func3TableModel model = new Func3TableModel();
-		table = new JTable();
+		table = new DefaultTable();
 		table.setModel(model);
-		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer())
-				.setHorizontalAlignment(SwingConstants.CENTER);
 		LotteryTableRenderer renderer = new LotteryTableRenderer();
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(renderer);
 		}
-		table.getTableHeader().setReorderingAllowed(false);
 
 		TableRowSorter<Func3TableModel> sorter = new TableRowSorter<Func3TableModel>(
 				model);

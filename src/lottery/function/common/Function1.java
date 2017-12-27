@@ -43,6 +43,7 @@ public class Function1 extends AbstractFunction {
 		// TODO Auto-generated constructor stub
 		super();
 		name = "Function1";
+		describe = "和数值统计";
 		scs = new ArrayList<>();
 	}
 

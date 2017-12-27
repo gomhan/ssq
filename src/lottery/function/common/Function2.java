@@ -49,6 +49,7 @@ public class Function2 extends AbstractFunction {
 		// TODO Auto-generated constructor stub
 		super();
 		name = "Function2";
+		describe = "中奖数字统计";
 		balls = new ArrayList<Ball>(LotteryConst.RED_BALL_COUNT);
 	}
 

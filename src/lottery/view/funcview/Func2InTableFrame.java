@@ -9,14 +9,13 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import lottery.function.common.Function2;
 import lottery.function.common.Function2.Ball;
 import lottery.view.renderer.LotteryTableRenderer;
+import lottery.view.table.DefaultTable;
 
 public class Func2InTableFrame extends JFrame {
 	private static final long serialVersionUID = 7149667399562379506L;
@@ -95,10 +94,8 @@ public class Func2InTableFrame extends JFrame {
 	private void initialize() {
 		// TODO Auto-generated method stub
 		Func2TableModel model = new Func2TableModel();
-		table = new JTable();
+		table = new DefaultTable();
 		table.setModel(model);
-		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer())
-				.setHorizontalAlignment(SwingConstants.CENTER);
 		LotteryTableRenderer renderer = new LotteryTableRenderer() {
 			@Override
 			protected void customizeRenderer(JTable table, Object value,
@@ -112,7 +109,6 @@ public class Func2InTableFrame extends JFrame {
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(renderer);
 		}
-		table.getTableHeader().setReorderingAllowed(false);
 
 		TableRowSorter<Func2TableModel> sorter = new TableRowSorter<Func2TableModel>(
 				model);

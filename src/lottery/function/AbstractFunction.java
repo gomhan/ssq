@@ -7,6 +7,7 @@ import lottery.util.LotteryConst;
 public abstract class AbstractFunction implements Function {
 
 	protected String name;
+	protected String describe;
 	protected final int id;
 	protected FunctionResult fr;
 
@@ -35,4 +36,9 @@ public abstract class AbstractFunction implements Function {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return describe;
+	}
 }

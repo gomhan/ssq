@@ -67,6 +67,7 @@ public class Start {
 			model.setLottery(dcs);
 			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
 			final LotteryWindow window = new LotteryWindow(model);
+			Context.getInstance().putObject(Context.MAIN_FRAME, window);
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {

@@ -3,8 +3,6 @@ package lottery.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -17,7 +15,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -33,7 +30,11 @@ import lottery.view.menu.common.Func1TableMenu;
 import lottery.view.menu.common.Func2TableMenu;
 import lottery.view.menu.shortterm.Func3TableMenu;
 import lottery.view.menu.shortterm.Func4TableMenu;
+import lottery.view.menu.shortterm.Func5BarChartMenu;
+import lottery.view.menu.shortterm.Func6TableMenu;
+import lottery.view.menu.shortterm.Func7TableMenu;
 import lottery.view.renderer.LotteryTableRenderer;
+import lottery.view.table.DefaultTable;
 
 public class LotteryWindow extends JFrame {
 	private static final long serialVersionUID = 7116715090667604045L;
@@ -77,7 +78,7 @@ public class LotteryWindow extends JFrame {
 		menu = new JMenu("自定义统计");
 		menuBar.add(menu, LotteryConst.MENU_INDEX_5);
 
-		table = new JTable();
+		table = new DefaultTable();
 		tableModel = new LotteryTableModel();
 		tableModel.setModel(model);
 		table.setModel(tableModel);
@@ -141,8 +142,8 @@ public class LotteryWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				XML xml = new XML();
-				xml.createLotteryXML(Context.getInstance().getLottery()
-						.getLottery(), LotteryConst.PROJECT_PATH + "ssq.xml");
+				xml.createLotteryXML(Context.getInstance().getLotteryList(),
+						LotteryConst.PROJECT_PATH + "ssq.xml");
 				JOptionPane.showConfirmDialog(LotteryWindow.this, "导出成功", "消息",
 						JOptionPane.CLOSED_OPTION);
 			}
@@ -172,6 +173,15 @@ public class LotteryWindow extends JFrame {
 		menu.addSeparator();
 		m = new Func4TableMenu();
 		menu.add(m);
+		menu.addSeparator();
+		m = new Func5BarChartMenu();
+		menu.add(m);
+		menu.addSeparator();
+		m = new Func6TableMenu();
+		menu.add(m);
+		menu.addSeparator();
+		m = new Func7TableMenu();
+		menu.add(m);
 	}
 
 	private void registerMidTermMenu() {
@@ -196,8 +206,14 @@ public class LotteryWindow extends JFrame {
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		
-		JLabel label = new JLabel("6选33范围：最有希望和数值102，最有希望范围[73 - 125]");
-		label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		StringBuilder buf = new StringBuilder();
+		buf.append("33选6型").append(":").append("最有希望和数值")
+				.append(LotteryConst.DEVIATION_BEST).append(",")
+				.append("最有希望范围").append("[")
+				.append(LotteryConst.DEVIATION_LOWEST).append(" - ")
+				.append(LotteryConst.DEVIATION_HIGHEST).append("]");
+		JLabel label = new JLabel(buf.toString());
+		label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		getContentPane().add(label, BorderLayout.SOUTH);
 	}
 

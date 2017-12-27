@@ -27,6 +27,7 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -85,15 +86,20 @@ public class Func1BarChartMenu extends FunctionMenu {
 		box.setSelected(false);
 		if (abbreviate) {
 			ChartFrame frame = new ChartFrame("和数值分布图", chart, true);
-			frame.setSize(1280, 768);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame.setSize(1280, 960);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		} else {
-			ChartPanel cp = new ChartPanel(chart, 5500, 960, 1280, 960, 5500,
-					960, true, true, true, true, true, true);
+			int size = ((List<SummationCount>) fr.getValue()).size();
+			int length = size % 10 == 0 ? size / 10 : size / 10 + 1;
+			int width = length * 400;
+			ChartPanel cp = new ChartPanel(chart, width, 768, 1024, 768, width,
+					768, true, true, true, true, true, true);
 			JScrollPane jsp = new JScrollPane(cp);
 
 			JFrame frame = new JFrame("和数值分布图");
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.getContentPane().add(jsp);
 			frame.setSize(1280, 960);
 			frame.setLocationRelativeTo(null);
@@ -136,7 +142,10 @@ public class Func1BarChartMenu extends FunctionMenu {
 		domainAxis.setTickLabelFont(new Font("宋体", Font.PLAIN, 14)); // x轴坐标上的文字
 		domainAxis.setTickLabelsVisible(true);// X轴的标题文字是否显示
 		domainAxis.setMaximumCategoryLabelWidthRatio(0.7f); // X轴的标题文字显示比例
-		domainAxis.setCategoryMargin(0.1); // X轴标签之间的距离10%
+		domainAxis.setCategoryMargin(0.03); // X轴标签之间的距离10%
+		domainAxis.setLowerMargin(0.0);
+		domainAxis.setUpperMargin(0.0);
+		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45); 
 
 		ValueAxis rangeAxis = categoryPlot.getRangeAxis();// y轴对象
 		rangeAxis.setLabelFont(new Font("宋体", Font.BOLD, 14)); // y轴的标题
@@ -157,7 +166,7 @@ public class Func1BarChartMenu extends FunctionMenu {
 		// 设置条目标签显示的位置,outline表示在条目区域外,baseline_center表示基于基线且居中
 		renderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(
 				ItemLabelAnchor.OUTSIDE12, TextAnchor.CENTER_LEFT));
-		renderer.setMaximumBarWidth(0.8); // 设置柱子宽度
+		renderer.setMaximumBarWidth(0.02); // 设置柱子宽度
 		categoryPlot.setRenderer(renderer);
 
 		return chart;

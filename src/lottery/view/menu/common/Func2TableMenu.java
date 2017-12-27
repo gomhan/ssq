@@ -71,8 +71,7 @@ public class Func2TableMenu extends FunctionMenu {
 	@Override
 	protected List<DoubleChromosphere> getParameter() {
 		// TODO Auto-generated method stub
-		List<DoubleChromosphere> objs = Context.getInstance().getLottery()
-				.getLottery();
+		List<DoubleChromosphere> objs = Context.getInstance().getLotteryList();
 		issue = 0;
 		String s = field.getText();
 		if (StringUtils.isBlank(s)) {

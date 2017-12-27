@@ -42,6 +42,7 @@ public class Function3 extends AbstractFunction {
 		// TODO Auto-generated constructor stub
 		super();
 		name = "Function3";
+		describe = "ÆæÅ¼Æ«²î";
 		number = new ArrayList<Function3.OddEvenNumber>();
 	}
 

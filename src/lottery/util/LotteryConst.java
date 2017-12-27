@@ -40,4 +40,12 @@ public class LotteryConst {
 			+ File.separatorChar;
 	
 	public static final int LOW_HIGH_SEPARATOR = 17;
+	
+	public static final int DEVIATION_BEST = 102;
+	public static final int DEVIATION_LOWEST = 79;
+	public static final int DEVIATION_HIGHEST = 125;
+	
+	public static String getAlignString(int i) {
+		return i < 10 ? "0" + i : Integer.toString(i);
+	}
 }

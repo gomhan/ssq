@@ -40,6 +40,7 @@ public class Function4 extends AbstractFunction {
 		// TODO Auto-generated constructor stub
 		super();
 		name = "Function4";
+		describe = "´óÐ¡Æ«²î";
 		number = new ArrayList<LowHighNumber>();
 	}
 

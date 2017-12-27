@@ -44,7 +44,7 @@ public abstract class FunctionMenu extends JMenuItem implements ActionListener,
 
 	protected List<DoubleChromosphere> getParameter() {
 		// TODO Auto-generated method stub
-		return Context.getInstance().getLottery().getLottery();
+		return Context.getInstance().getLotteryList();
 	}
 
 	protected abstract Function getFunction();

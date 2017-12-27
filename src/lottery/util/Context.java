@@ -1,14 +1,18 @@
 package lottery.util;
 
+import java.awt.Window;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lottery.itf.FunctionExecutor;
+import lottery.model.DoubleChromosphere;
 import lottery.model.LotteryModel;
+import lottery.view.LotteryWindow;
 
 public final class Context {
 
-	// public static final String MAIN_FRAME = "mainFrame";
-	// public static final String ACTIVE_WINDOW = "activeWindow";
+	public static final String MAIN_FRAME = "mainFrame";
+	public static final String ACTIVE_WINDOW = "activeWindow";
 	public static final String LOTTERY_MODEL = "lotteryModel";
 	public static final String EXECUTOR = "executor";
 
@@ -34,8 +38,24 @@ public final class Context {
 		return (LotteryModel) _cache.get(LOTTERY_MODEL);
 	}
 
+	public List<DoubleChromosphere> getLotteryList() {
+		LotteryModel lm = getLottery();
+		if (lm != null && lm.getLottery() != null) {
+			return lm.getLottery();
+		}
+		return null;
+	}
+
 	public FunctionExecutor getExecutor() {
 		return (FunctionExecutor) _cache.get(EXECUTOR);
+	}
+
+	public LotteryWindow getMainFrame() {
+		return (LotteryWindow) _cache.get(MAIN_FRAME);
+	}
+
+	public Window getActiveWindow() {
+		return (Window) _cache.get(ACTIVE_WINDOW);
 	}
 
 	private Context() {
