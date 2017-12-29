@@ -112,7 +112,7 @@ public class Start {
 		UIManager.put("Viewport.background", Color.white);
 		UIManager.put("Table.dropLineColor", Color.black);
 		UIManager.put("Table.dropLineShortColor", Color.black);
-		// new Start().startupWithExcel();
-		new Start().startupWithXml();
+		new Start().startupWithExcel();
+		// new Start().startupWithXml();
 	}
 }

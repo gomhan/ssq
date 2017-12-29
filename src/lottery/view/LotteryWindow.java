@@ -175,7 +175,7 @@ public class LotteryWindow extends JFrame {
 		m = new HighLowTableMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new SummationBarChartMenu();
+		m = new SumDeviationBarChartMenu();
 		menu.add(m);
 		menu.addSeparator();
 		m = new NumberAreaTableMenu();
@@ -209,7 +209,7 @@ public class LotteryWindow extends JFrame {
 		jsp.setViewportView(table);
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(jsp, BorderLayout.CENTER);
-		
+
 		StringBuilder buf = new StringBuilder();
 		buf.append("33选6型").append(":").append("最有希望和数值")
 				.append(LotteryConst.DEVIATION_BEST).append(",")
