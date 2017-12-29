@@ -1,5 +1,11 @@
 package lottery.itf;
 
+/**
+ * Each {@link Result} encapsulated a value which is the actual result of
+ * execution of a function. user can access value of this {@link Result} via
+ * {@code get} and {@code set} method. use {@link Checker} to verify the
+ * validity of value.
+ */
 public interface Result {
 
 	/** Null result */
@@ -31,6 +37,12 @@ public interface Result {
 
 		@Override
 		public Checker getChecker() {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void clearValue() {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
@@ -70,5 +82,10 @@ public interface Result {
 	 * @return
 	 */
 	boolean invalid();
+
+	/**
+	 * clear value of this result.
+	 */
+	void clearValue();
 
 }

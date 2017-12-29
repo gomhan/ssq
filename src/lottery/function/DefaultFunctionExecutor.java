@@ -26,7 +26,7 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
 	}
 
 	@Override
-	public boolean installFunction(Function function) {
+	public boolean install(Function function) {
 		// TODO Auto-generated method stub
 		uninstall();
 		this.f = function;
@@ -37,7 +37,7 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
 	public void uninstall() {
 		// TODO Auto-generated method stub
 		if (f != null) {
-			f.clearValue();
+			f.reset();
 			f = null;
 		}
 		cancelled = false;
@@ -62,7 +62,7 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
 		return cancelled;
 	}
 
-	public Result getResult() {
+	public Result getDefaultResult() {
 		return getResult(LotteryConst.DEFAULT_IDENTIFIER);
 	}
 
@@ -92,14 +92,14 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
 	public State execute(List<DoubleChromosphere> parameter) {
 		// TODO Auto-generated method stub
 		state = State.UNKNOWN;
-		Function func = getFunction();
-		if (func == null || parameter == null || parameter.size() == 0) {
+		Function f = getFunction();
+		if (f == null || parameter == null || parameter.size() == 0) {
 			state = State.FAILED;
 		} else {
 			if (cancelled()) {
 				state = State.CANCELLED;
 			} else {
-				state = func.invoke(parameter);
+				state = f.invoke(parameter);
 			}
 		}
 		return state;

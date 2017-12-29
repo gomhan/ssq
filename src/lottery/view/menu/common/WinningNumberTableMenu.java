@@ -10,72 +10,75 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import lottery.function.FunctionResult;
-import lottery.function.common.Function2;
-import lottery.function.common.Function2.Ball;
-import lottery.itf.Function;
+import lottery.function.common.WinningNumberStatistic;
+import lottery.function.common.WinningNumberStatistic.Ball;
+import lottery.itf.Result;
 import lottery.model.DoubleChromosphere;
 import lottery.util.Context;
 import lottery.util.LotteryConst;
-import lottery.view.funcview.Func2InTableFrame;
+import lottery.view.funcview.WinningNumberInTableFrame;
 import lottery.view.menu.FunctionMenu;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Func2TableMenu extends FunctionMenu {
+public class WinningNumberTableMenu extends FunctionMenu {
 	private static final long serialVersionUID = 6397092403402449636L;
 
+	JPanel p;
 	JTextField field;
 	JLabel label;
 	JLabel label2;
 	int issue;
-	Function function;
 
-	public Func2TableMenu() {
-		// TODO Auto-generated constructor stub
+	public WinningNumberTableMenu() {
 		super();
-		setName("Func2TableMenu");
+	}
+	
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		setName("WinningNumberTableMenu");
 		setText("中奖数字情况表");
-		field = new JTextField(5);
-		addActionListener(this);
-		function = new Function2();
-
-		label = new JLabel("[期数：");
-		label2 = new JLabel("]");
-		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		p.add(label);
-		p.add(field);
-		p.add(label2);
-		p.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
-
 		setPreferredSize(new Dimension(230, 30));
 		setMinimumSize(new Dimension(230, 30));
 		setMaximumSize(new Dimension(230, 30));
+		function = new WinningNumberStatistic();
+		
+		field = new JTextField(5);
+		label = new JLabel("[期数：");
+		label2 = new JLabel("]");
+		p = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		p.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
+		label.setOpaque(false);
+		label2.setOpaque(false);
+		p.setOpaque(false);
+	}
+	
+	@Override
+	protected void build() {
+		// TODO Auto-generated method stub
+		p.add(label);
+		p.add(field);
+		p.add(label2);
+		
 		setLayout(new BorderLayout());
 		add(p, BorderLayout.EAST);
 	}
 
-	public void showChart(FunctionResult fr) {
+	public void showGraphics(Result result) {
 		// TODO Auto-generated method stub
-		Func2InTableFrame frame = new Func2InTableFrame(
-				(List<Ball>) fr.getValue(), issue);
+		WinningNumberInTableFrame frame = new WinningNumberInTableFrame(
+				(List<Ball>) result.getValue(), issue);
 		frame.display();
 	}
-
+	
 	@Override
-	protected Function getFunction() {
+	protected void handleUserInput() {
 		// TODO Auto-generated method stub
-		return function;
-	}
-
-	@Override
-	protected List<DoubleChromosphere> getParameter() {
-		// TODO Auto-generated method stub
-		List<DoubleChromosphere> objs = Context.getInstance().getLotteryList();
 		issue = 0;
 		String s = field.getText();
 		if (StringUtils.isBlank(s)) {
-			issue = objs.size();
+			issue = Context.getInstance().getLotteryList().size();
 		} else {
 			try {
 				issue = Integer.parseInt(s);
@@ -84,7 +87,13 @@ public class Func2TableMenu extends FunctionMenu {
 				e2.printStackTrace();
 			}
 		}
-		field.setText("");
+		// field.setText("");
+	}
+
+	@Override
+	protected List<DoubleChromosphere> getParameter() {
+		// TODO Auto-generated method stub
+		List<DoubleChromosphere> objs = Context.getInstance().getLotteryList();
 		List<DoubleChromosphere> filterObjs = null;
 		if (issue > 0) {
 			filterObjs = new ArrayList<>();

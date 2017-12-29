@@ -15,10 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import lottery.function.FunctionResult;
-import lottery.function.common.Function1;
-import lottery.function.common.Function1.SummationCount;
-import lottery.itf.Function;
+import lottery.function.common.SummationStatistic;
+import lottery.function.common.SummationStatistic.SummationCount;
+import lottery.itf.Result;
 import lottery.util.LotteryConst;
 import lottery.view.menu.FunctionMenu;
 
@@ -39,51 +38,58 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.TextAnchor;
 
-public class Func1BarChartMenu extends FunctionMenu {
+public class SummationBarChartMenu extends FunctionMenu {
 	private static final long serialVersionUID = -9263520548285241L;
 
+	JPanel p;
 	JLabel label;
 	JLabel label2;
 	JCheckBox box;
 	boolean abbreviate;
-	Function function;
 
-	public Func1BarChartMenu() {
-		// TODO Auto-generated constructor stub
+	public SummationBarChartMenu() {
 		super();
-		setName("Func1BarChartMenu");
+	}
+
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		setName("SummationBarChartMenu");
 		setText("和数值分布柱状图");
-		addActionListener(this);
-		function = new Function1();
+		setPreferredSize(new Dimension(230, 30));
+		setMinimumSize(new Dimension(230, 30));
+		setMaximumSize(new Dimension(230, 30));
+		function = new SummationStatistic();
 
 		label = new JLabel("[缩略：");
 		label2 = new JLabel("]");
 		box = new JCheckBox();
+		p = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		p.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
+		box.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
+		label.setOpaque(false);
+		label2.setOpaque(false);
+		p.setOpaque(false);
+	}
 
-		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	protected void build() {
 		p.add(label);
 		p.add(box);
 		p.add(label2);
-		p.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
-		box.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
-
-		setPreferredSize(new Dimension(230, 30));
-		setMinimumSize(new Dimension(230, 30));
-		setMaximumSize(new Dimension(230, 30));
+		
 		setLayout(new BorderLayout());
 		add(p, BorderLayout.EAST);
 	}
 
 	@Override
-	protected Function getFunction() {
+	protected void handleUserInput() {
 		// TODO Auto-generated method stub
-		return function;
-	}
-
-	public void showChart(FunctionResult fr) {
-		JFreeChart chart = createChart(fr);
 		abbreviate = box.isSelected();
 		box.setSelected(false);
+	}
+
+	public void showGraphics(Result result) {
+		JFreeChart chart = createChart(result);
 		if (abbreviate) {
 			ChartFrame frame = new ChartFrame("和数值分布图", chart, true);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -91,7 +97,7 @@ public class Func1BarChartMenu extends FunctionMenu {
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		} else {
-			int size = ((List<SummationCount>) fr.getValue()).size();
+			int size = ((List<SummationCount>) result.getValue()).size();
 			int length = size % 10 == 0 ? size / 10 : size / 10 + 1;
 			int width = length * 400;
 			ChartPanel cp = new ChartPanel(chart, width, 768, 1024, 768, width,
@@ -107,8 +113,8 @@ public class Func1BarChartMenu extends FunctionMenu {
 		}
 	}
 
-	private JFreeChart createChart(FunctionResult fr) {
-		List<SummationCount> scs = (List<SummationCount>) fr.getValue();
+	private JFreeChart createChart(Result result) {
+		List<SummationCount> scs = (List<SummationCount>) result.getValue();
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (SummationCount sc : scs) {
 			dataset.addValue(sc.getCount(), "summation", sc.getSummation());
@@ -145,7 +151,7 @@ public class Func1BarChartMenu extends FunctionMenu {
 		domainAxis.setCategoryMargin(0.03); // X轴标签之间的距离10%
 		domainAxis.setLowerMargin(0.0);
 		domainAxis.setUpperMargin(0.0);
-		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45); 
+		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
 
 		ValueAxis rangeAxis = categoryPlot.getRangeAxis();// y轴对象
 		rangeAxis.setLabelFont(new Font("宋体", Font.BOLD, 14)); // y轴的标题

@@ -6,13 +6,14 @@ import java.util.List;
 
 import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
+import lottery.model.Identifier;
 import lottery.model.State;
 import lottery.util.LotteryConst;
 
 /**
  * 中奖数字情况统计
  */
-public class Function2 extends AbstractFunction {
+public class WinningNumberStatistic extends AbstractFunction {
 
 	public static class Ball implements Comparable<Ball> {
 		int number;
@@ -45,18 +46,20 @@ public class Function2 extends AbstractFunction {
 
 	private List<Ball> balls;
 
-	public Function2() {
+	public WinningNumberStatistic() {
 		// TODO Auto-generated constructor stub
 		super();
-		name = "Function2";
+		id = Identifier.createIdentifier(LotteryConst.COMMON_OFFSET | 2);
+		name = "WinningNumberStatistic";
 		describe = "中奖数字统计";
 		balls = new ArrayList<Ball>(LotteryConst.RED_BALL_COUNT);
+		getDefaultResult().setValue(balls);
 	}
 
 	@Override
-	public State invoke(List<DoubleChromosphere> objs) {
+	public State calculate(List<DoubleChromosphere> objs) {
 		// TODO Auto-generated method stub
-		clearValue();
+		reset();
 		int[] ball = new int[LotteryConst.RED_BALL_COUNT + 1];
 		int total = 0;
 		for (DoubleChromosphere dc : objs) {
@@ -91,12 +94,11 @@ public class Function2 extends AbstractFunction {
 			b.position = i + 1;
 		}
 
-		fr.setValue(balls);
 		return State.SUCCESS;
 	}
 
 	@Override
-	public void clearValue() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		if (balls != null) {
 			balls.clear();

@@ -12,26 +12,27 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
-import lottery.function.common.Function1.SummationCount;
+import lottery.function.common.WinningNumberStatistic;
+import lottery.function.common.WinningNumberStatistic.Ball;
 import lottery.view.renderer.LotteryTableRenderer;
 import lottery.view.table.DefaultTable;
 
-public class Func1InTableFrame extends JFrame {
-	private static final long serialVersionUID = 6985324648616498984L;
+public class WinningNumberInTableFrame extends JFrame {
+	private static final long serialVersionUID = 7149667399562379506L;
 
-	class Func1TableModel extends AbstractTableModel {
-		private static final long serialVersionUID = 1323224085412318456L;
+	class Func2TableModel extends AbstractTableModel {
+		private static final long serialVersionUID = 1461215894264886120L;
 
 		@Override
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			return scs.size();
+			return balls.size();
 		}
 
 		@Override
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-			return 2;
+			return 4;
 		}
 
 		@Override
@@ -39,9 +40,13 @@ public class Func1InTableFrame extends JFrame {
 			// TODO Auto-generated method stub
 			switch (column) {
 			case 0:
-				return "和数值";
+				return "红球号";
 			case 1:
 				return "中奖次数";
+			case 2:
+				return "名次";
+			case 3:
+				return "比例(%)";
 			default:
 				break;
 			}
@@ -57,12 +62,16 @@ public class Func1InTableFrame extends JFrame {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO Auto-generated method stub
-			SummationCount sc = scs.get(rowIndex);
+			Ball b = balls.get(rowIndex);
 			switch (columnIndex) {
 			case 0:
-				return sc.getSummation();
+				return b.getNumber();
 			case 1:
-				return sc.getCount();
+				return b.getCount();
+			case 2:
+				return b.getPosition();
+			case 3:
+				return b.getScale();
 			default:
 				break;
 			}
@@ -71,42 +80,41 @@ public class Func1InTableFrame extends JFrame {
 	}
 
 	JTable table;
-	List<SummationCount> scs;
+	List<WinningNumberStatistic.Ball> balls;
 
-	public Func1InTableFrame(List<SummationCount> scs) {
+	public WinningNumberInTableFrame(List<Ball> balls, int issue) {
 		// TODO Auto-generated constructor stub
-		this.scs = new ArrayList<>(scs);
+		this.balls = new ArrayList<Ball>(balls);
+		setTitle("中奖数字情况表_[" + issue + "期]");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		initialize();
 		build();
 	}
 
 	private void initialize() {
 		// TODO Auto-generated method stub
-		setTitle("和数值表");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		Func2TableModel model = new Func2TableModel();
 		table = new DefaultTable();
-		Func1TableModel model = new Func1TableModel();
 		table.setModel(model);
 		LotteryTableRenderer renderer = new LotteryTableRenderer() {
 			@Override
 			protected void customizeRenderer(JTable table, Object value,
 					boolean isSelected, boolean hasFocus, int row, int column,
 					Component renderComponent) {
-				if (column == 1) {
-					Integer count = (Integer) value;
-					if (count == 0) {
-						setForeground(Color.RED);
-					}
+				if (column == 2) {
+					setForeground(Color.RED);
 				}
 			}
 		};
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer(renderer);
 		}
-		
-		TableRowSorter<Func1TableModel> sorter = new TableRowSorter<Func1TableModel>(
+
+		TableRowSorter<Func2TableModel> sorter = new TableRowSorter<Func2TableModel>(
 				model);
+		sorter.setSortable(3, false); // do not sort scale
 		table.setRowSorter(sorter);
+
 	}
 
 	private void build() {
@@ -117,7 +125,7 @@ public class Func1InTableFrame extends JFrame {
 	}
 
 	public void display() {
-		setSize(800, 400);
+		setSize(400, 600);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

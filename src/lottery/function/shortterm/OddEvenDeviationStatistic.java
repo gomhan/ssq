@@ -5,12 +5,14 @@ import java.util.List;
 
 import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
+import lottery.model.Identifier;
 import lottery.model.State;
+import lottery.util.LotteryConst;
 
 /**
  * ÆæÅ¼Æ«²î
  */
-public class Function3 extends AbstractFunction {
+public class OddEvenDeviationStatistic extends AbstractFunction {
 
 	public static class OddEvenNumber {
 		String issue;
@@ -38,18 +40,20 @@ public class Function3 extends AbstractFunction {
 
 	private List<OddEvenNumber> number;
 
-	public Function3() {
+	public OddEvenDeviationStatistic() {
 		// TODO Auto-generated constructor stub
 		super();
-		name = "Function3";
+		id = Identifier.createIdentifier(LotteryConst.SHORT_TERM_OFFSET | 1);
+		name = "OddEvenDeviationStatistic";
 		describe = "ÆæÅ¼Æ«²î";
-		number = new ArrayList<Function3.OddEvenNumber>();
+		number = new ArrayList<OddEvenNumber>();
+		getDefaultResult().setValue(number);
 	}
 
 	@Override
-	public State invoke(List<DoubleChromosphere> parameter) {
+	public State calculate(List<DoubleChromosphere> parameter) {
 		// TODO Auto-generated method stub
-		clearValue();
+		reset();
 		OddEvenNumber oe;
 		for (DoubleChromosphere dc : parameter) {
 			oe = new OddEvenNumber();
@@ -87,12 +91,12 @@ public class Function3 extends AbstractFunction {
 			}
 			number.add(oe);
 		}
-		fr.setValue(number);
+
 		return State.SUCCESS;
 	}
 
 	@Override
-	public void clearValue() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		if (number != null) {
 			number.clear();

@@ -25,14 +25,15 @@ import lottery.model.LotteryTableModel;
 import lottery.util.Context;
 import lottery.util.LotteryConst;
 import lottery.util.XML;
-import lottery.view.menu.common.Func1BarChartMenu;
-import lottery.view.menu.common.Func1TableMenu;
-import lottery.view.menu.common.Func2TableMenu;
-import lottery.view.menu.shortterm.Func3TableMenu;
-import lottery.view.menu.shortterm.Func4TableMenu;
-import lottery.view.menu.shortterm.Func5BarChartMenu;
-import lottery.view.menu.shortterm.Func6TableMenu;
-import lottery.view.menu.shortterm.Func7TableMenu;
+import lottery.view.menu.common.SummationBarChartMenu;
+import lottery.view.menu.common.SummationTableMenu;
+import lottery.view.menu.common.WinningNumberTableMenu;
+import lottery.view.menu.shortterm.OddEvenTableMenu;
+import lottery.view.menu.shortterm.HighLowTableMenu;
+import lottery.view.menu.shortterm.SumDeviationBarChartMenu;
+import lottery.view.menu.shortterm.NumberAreaTableMenu;
+import lottery.view.menu.shortterm.PopularTableMenu;
+import lottery.view.menu.shortterm.MissTableMenu;
 import lottery.view.renderer.LotteryTableRenderer;
 import lottery.view.table.DefaultTable;
 
@@ -154,13 +155,13 @@ public class LotteryWindow extends JFrame {
 	private void registerCommonFunctionMenu() {
 		JMenu menu = menuBar.getMenu(LotteryConst.MENU_INDEX_1);
 		JMenuItem m;
-		m = new Func1BarChartMenu();
+		m = new SummationBarChartMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new Func1TableMenu();
+		m = new SummationTableMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new Func2TableMenu();
+		m = new WinningNumberTableMenu();
 		menu.add(m);
 		menu.addSeparator();
 	}
@@ -168,19 +169,22 @@ public class LotteryWindow extends JFrame {
 	private void registerShortTermMenu() {
 		JMenu menu = menuBar.getMenu(LotteryConst.MENU_INDEX_2);
 		JMenuItem m;
-		m = new Func3TableMenu();
+		m = new OddEvenTableMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new Func4TableMenu();
+		m = new HighLowTableMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new Func5BarChartMenu();
+		m = new SummationBarChartMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new Func6TableMenu();
+		m = new NumberAreaTableMenu();
 		menu.add(m);
 		menu.addSeparator();
-		m = new Func7TableMenu();
+		m = new PopularTableMenu();
+		menu.add(m);
+		menu.addSeparator();
+		m = new MissTableMenu();
 		menu.add(m);
 	}
 

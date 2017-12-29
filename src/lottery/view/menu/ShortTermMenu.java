@@ -1,9 +1,8 @@
-package lottery.view.menu.shortterm;
+package lottery.view.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.commons.lang3.StringUtils;
-
-import lottery.itf.Function;
 import lottery.model.DoubleChromosphere;
 import lottery.util.Context;
 import lottery.util.LotteryConst;
-import lottery.view.menu.FunctionMenu;
+
+import org.apache.commons.lang3.StringUtils;
 
 public abstract class ShortTermMenu extends FunctionMenu {
 
@@ -29,22 +26,18 @@ public abstract class ShortTermMenu extends FunctionMenu {
 	protected JLabel label4;
 	protected JPanel inputPanel;
 
-	protected int issue;
-	protected int end;
-	protected Function function;
+	protected int offset;
+	protected int length;
 
 	public ShortTermMenu() {
-		// TODO Auto-generated constructor stub
+		super();
+	}
+
+	protected void initialize() {
 		setPreferredSize(new Dimension(380, 30));
 		setMinimumSize(new Dimension(380, 30));
 		setMaximumSize(new Dimension(380, 30));
 
-		initialize();
-		build();
-		addActionListener(this);
-	}
-
-	protected void initialize() {
 		field = new JTextField(5);
 		field.setText("10");
 		label = new JLabel("ÆÚÊý£º");
@@ -56,6 +49,11 @@ public abstract class ShortTermMenu extends FunctionMenu {
 
 		inputPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		inputPanel.setBackground(LotteryConst.COMPONENT_DEFAULT_BG);
+
+		label.setOpaque(false);
+		label2.setOpaque(false);
+		label3.setOpaque(false);
+		inputPanel.setOpaque(false);
 	}
 
 	protected void build() {
@@ -68,48 +66,41 @@ public abstract class ShortTermMenu extends FunctionMenu {
 		setLayout(new BorderLayout());
 		add(inputPanel, BorderLayout.EAST);
 	}
-	
-	protected void prepare() {
+
+	protected void handleUserInput() {
 		List<DoubleChromosphere> objs = Context.getInstance().getLotteryList();
-		issue = 0;
+		offset = 0;
 		String s = field1.getText();
 		if (StringUtils.isBlank(s)) {
 		} else {
 			try {
-				issue = Integer.parseInt(s);
+				offset = Integer.parseInt(s);
 			} catch (Exception e2) {
 				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
-		if (issue < 0 || issue >= objs.size()) {
-			issue = 0;
+		if (offset < 0 || offset >= objs.size()) {
+			offset = 0;
 		}
 
-		end = 10;
+		length = 10;
 		s = field.getText();
 		if (StringUtils.isBlank(s)) {
 		} else {
 			try {
-				end = Integer.parseInt(s);
+				length = Integer.parseInt(s);
 			} catch (Exception e2) {
 				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
-		end = issue + end;
-		if (end < 0) {
-			end = 0;
-		} else if (end >= objs.size()) {
-			end = objs.size();
+		if (length < 0) {
+			length = 0;
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		prepare();
-		super.actionPerformed(e);
+		if (offset + length > objs.size()) {
+			length = 0;
+		}
 	}
 
 	@Override
@@ -117,7 +108,8 @@ public abstract class ShortTermMenu extends FunctionMenu {
 		// TODO Auto-generated method stub
 		List<DoubleChromosphere> objs = Context.getInstance().getLotteryList();
 		List<DoubleChromosphere> filterObjs = new ArrayList<>();
-		for (int i = issue; i < end; i++) {
+		int endIssue = offset + length;
+		for (int i = offset; i < endIssue; i++) {
 			filterObjs.add(objs.get(i));
 		}
 		return filterObjs;

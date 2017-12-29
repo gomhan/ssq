@@ -5,15 +5,16 @@ import java.util.List;
 
 import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
+import lottery.model.Identifier;
 import lottery.model.State;
 import lottery.util.Context;
 import lottery.util.LotteryConst;
 
-public class Function7 extends AbstractFunction {
+public class PopularDeviationStatistic extends AbstractFunction {
 
 	public static class Popular implements Comparable<Popular> {
 		DoubleChromosphere dc;
-		int[] missNumber = new int[6];
+		int[] ballMissCount = new int[6];
 		int[] ballMissMap = new int[LotteryConst.RED_BALL_COUNT + 1];
 		int missCount;
 		int hotNumberCount;
@@ -27,12 +28,12 @@ public class Function7 extends AbstractFunction {
 			this.dc = dc;
 		}
 
-		public int[] getMissNumber() {
-			return missNumber;
+		public int[] getBallMissCount() {
+			return ballMissCount;
 		}
 
-		public void setMissNumber(int[] missNumber) {
-			this.missNumber = missNumber;
+		public void setBallMissCount(int[] missNumber) {
+			this.ballMissCount = missNumber;
 		}
 
 		public int[] getBallMissMap() {
@@ -74,73 +75,80 @@ public class Function7 extends AbstractFunction {
 		}
 	}
 
+	public static final String PROPERTY_OFFSET = "offset";
 	private List<Popular> popular;
-	private int issue;
+	private int offset;
 
-	public Function7() {
+	public PopularDeviationStatistic() {
 		// TODO Auto-generated constructor stub
 		super();
-		name = "Function7";
-		describe = "ÒÅÂ©Êý×Ö";
+		id = Identifier.createIdentifier(LotteryConst.SHORT_TERM_OFFSET | 5);
+		name = "PopularDeviationStatistic";
+		describe = "ÀäÈÈÃÅÆ«²î";
 		popular = new ArrayList<Popular>();
-	}
-
-	public int getIssue() {
-		return issue;
-	}
-
-	public void setIssue(int issue) {
-		this.issue = issue;
+		getDefaultResult().setValue(popular);
 	}
 
 	@Override
-	public State invoke(List<DoubleChromosphere> parameter) {
+	public boolean propertyInvalid() {
 		// TODO Auto-generated method stub
-		clearValue();
+		Object obj = properties.get(PROPERTY_OFFSET);
+		if (obj == null || !(obj instanceof Integer)) {
+			offset = 0;
+		} else {
+			offset = ((Integer) obj).intValue();
+		}
+		return super.propertyInvalid();
+	}
+
+	@Override
+	public State calculate(List<DoubleChromosphere> parameter) {
+		// TODO Auto-generated method stub
+		reset();
 		List<DoubleChromosphere> dcs = Context.getInstance().getLotteryList();
 		Popular p;
 		DoubleChromosphere dc;
 		int lastHitIndex;
-		int no = this.issue;
-		for (int i = 0; i < parameter.size(); i++, no++) {
+		int issueNo = offset;
+		for (int i = 0; i < parameter.size(); i++, issueNo++) {
 			dc = parameter.get(i);
 			p = new Popular();
 			p.setDc(dc);
 
-			lastHitIndex = lastHitIndex(no + 1, dc.getRed1(), dcs);
-			lastHitIndex = lastHitIndex - no - 1;
-			p.getMissNumber()[0] = lastHitIndex;
+			lastHitIndex = lastHitIndex(issueNo + 1, dc.getRed1(), dcs);
+			lastHitIndex = lastHitIndex - issueNo - 1;
+			p.getBallMissCount()[0] = lastHitIndex;
 			p.getBallMissMap()[dc.getRed1()] = lastHitIndex;
 
-			lastHitIndex = lastHitIndex(no + 1, dc.getRed2(), dcs);
-			lastHitIndex = lastHitIndex - no - 1;
-			p.getMissNumber()[1] = lastHitIndex;
+			lastHitIndex = lastHitIndex(issueNo + 1, dc.getRed2(), dcs);
+			lastHitIndex = lastHitIndex - issueNo - 1;
+			p.getBallMissCount()[1] = lastHitIndex;
 			p.getBallMissMap()[dc.getRed2()] = lastHitIndex;
 
-			lastHitIndex = lastHitIndex(no + 1, dc.getRed3(), dcs);
-			lastHitIndex = lastHitIndex - no - 1;
-			p.getMissNumber()[2] = lastHitIndex;
+			lastHitIndex = lastHitIndex(issueNo + 1, dc.getRed3(), dcs);
+			lastHitIndex = lastHitIndex - issueNo - 1;
+			p.getBallMissCount()[2] = lastHitIndex;
 			p.getBallMissMap()[dc.getRed3()] = lastHitIndex;
 
-			lastHitIndex = lastHitIndex(no + 1, dc.getRed4(), dcs);
-			lastHitIndex = lastHitIndex - no - 1;
-			p.getMissNumber()[3] = lastHitIndex;
+			lastHitIndex = lastHitIndex(issueNo + 1, dc.getRed4(), dcs);
+			lastHitIndex = lastHitIndex - issueNo - 1;
+			p.getBallMissCount()[3] = lastHitIndex;
 			p.getBallMissMap()[dc.getRed4()] = lastHitIndex;
 
-			lastHitIndex = lastHitIndex(no + 1, dc.getRed5(), dcs);
-			lastHitIndex = lastHitIndex - no - 1;
-			p.getMissNumber()[4] = lastHitIndex;
+			lastHitIndex = lastHitIndex(issueNo + 1, dc.getRed5(), dcs);
+			lastHitIndex = lastHitIndex - issueNo - 1;
+			p.getBallMissCount()[4] = lastHitIndex;
 			p.getBallMissMap()[dc.getRed5()] = lastHitIndex;
 
-			lastHitIndex = lastHitIndex(no + 1, dc.getRed6(), dcs);
-			lastHitIndex = lastHitIndex - no - 1;
-			p.getMissNumber()[5] = lastHitIndex;
+			lastHitIndex = lastHitIndex(issueNo + 1, dc.getRed6(), dcs);
+			lastHitIndex = lastHitIndex - issueNo - 1;
+			p.getBallMissCount()[5] = lastHitIndex;
 			p.getBallMissMap()[dc.getRed6()] = lastHitIndex;
 
 			calculate(p);
 			popular.add(p);
 		}
-		fr.setValue(popular);
+
 		return State.SUCCESS;
 	}
 
@@ -163,7 +171,7 @@ public class Function7 extends AbstractFunction {
 	private void calculate(Popular p) {
 		int hotNumberCount = 0;
 		int missCount = 0;
-		for (int i : p.missNumber) {
+		for (int i : p.ballMissCount) {
 			if (i < 10) {
 				hotNumberCount++;
 			}
@@ -176,7 +184,7 @@ public class Function7 extends AbstractFunction {
 	}
 
 	@Override
-	public void clearValue() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		if (popular != null) {
 			popular.clear();

@@ -5,10 +5,11 @@ import java.util.List;
 
 import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
+import lottery.model.Identifier;
 import lottery.model.State;
 import lottery.util.LotteryConst;
 
-public class Function6 extends AbstractFunction {
+public class NumberAreaDeviationStatistic extends AbstractFunction {
 
 	public static class Area implements Comparable<Area> {
 		int startNumber;
@@ -68,31 +69,46 @@ public class Function6 extends AbstractFunction {
 		}
 	}
 
+	public static final String PROPERTY_AREA_COUNT = "areaCount";
 	private List<Area> areas;
 	private int areaCount;
-	private int issue;
+	private int issueCount;
 
-	public Function6() {
+	public NumberAreaDeviationStatistic() {
 		// TODO Auto-generated constructor stub
 		super();
-		name = "Function6";
+		id = Identifier.createIdentifier(LotteryConst.SHORT_TERM_OFFSET | 4);
+		name = "NumberAreaDeviationStatistic";
 		describe = "Êý×ÖÇø¼äÆ«²î";
-		areas = new ArrayList<Area>();
 		areaCount = 11;
+		areas = new ArrayList<Area>();
+		getDefaultResult().setValue(areas);
 	}
 
 	@Override
-	public State invoke(List<DoubleChromosphere> parameter) {
+	public boolean propertyInvalid() {
 		// TODO Auto-generated method stub
-		issue = parameter.size();
-		clearValue();
+		Object obj = properties.get(PROPERTY_AREA_COUNT);
+		if (obj == null || !(obj instanceof Integer)) {
+			areaCount = 0;
+		} else {
+			areaCount = ((Integer) obj).intValue();
+		}
+		return super.propertyInvalid();
+	}
+
+	@Override
+	public State calculate(List<DoubleChromosphere> parameter) {
+		// TODO Auto-generated method stub
+		issueCount = parameter.size();
+		reset();
 		calculateArea();
 		DoubleChromosphere dc;
-		for (int i = 0; i < issue; i++) {
+		for (int i = 0; i < issueCount; i++) {
 			dc = parameter.get(i);
 			insertToArea(dc, i);
 		}
-		fr.setValue(areas);
+
 		return State.SUCCESS;
 	}
 
@@ -134,19 +150,15 @@ public class Function6 extends AbstractFunction {
 	}
 
 	@Override
-	public void clearValue() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		if (areas != null) {
 			areas.clear();
 		}
 	}
 
-	public int getAreaCount() {
+	private int getAreaCount() {
 		return areaCount;
-	}
-
-	public void setAreaCount(int areaCount) {
-		this.areaCount = areaCount;
 	}
 
 	private void calculateArea() {
@@ -171,8 +183,8 @@ public class Function6 extends AbstractFunction {
 			area.setAreaName(new StringBuilder().append("[").append(start)
 					.append(" ").append("-").append(" ").append(end)
 					.append("]").toString());
-			area.setNumberCount(new int[issue]);
-			area.setIssue(new String[issue]);
+			area.setNumberCount(new int[issueCount]);
+			area.setIssue(new String[issueCount]);
 			areas.add(area);
 		}
 	}

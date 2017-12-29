@@ -5,10 +5,11 @@ import java.util.List;
 
 import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
+import lottery.model.Identifier;
 import lottery.model.State;
 import lottery.util.LotteryConst;
 
-public class Function5 extends AbstractFunction {
+public class SummationDeviationStatistic extends AbstractFunction {
 
 	public static class SummationDeviation implements
 			Comparable<SummationDeviation> {
@@ -37,18 +38,20 @@ public class Function5 extends AbstractFunction {
 
 	private List<SummationDeviation> sds;
 
-	public Function5() {
+	public SummationDeviationStatistic() {
 		// TODO Auto-generated constructor stub
 		super();
-		name = "Function5";
+		id = Identifier.createIdentifier(LotteryConst.SHORT_TERM_OFFSET | 3);
+		name = "SummationDeviationStatistic";
 		describe = "ºÍÊýÖµÆ«²î";
 		sds = new ArrayList<SummationDeviation>();
+		getDefaultResult().setValue(sds);
 	}
 
 	@Override
-	public State invoke(List<DoubleChromosphere> parameter) {
+	public State calculate(List<DoubleChromosphere> parameter) {
 		// TODO Auto-generated method stub
-		clearValue();
+		reset();
 		SummationDeviation sd;
 		for (DoubleChromosphere dc : parameter) {
 			sd = new SummationDeviation();
@@ -57,12 +60,12 @@ public class Function5 extends AbstractFunction {
 			sd.sd = sd.summation - LotteryConst.DEVIATION_BEST;
 			sds.add(sd);
 		}
-		fr.setValue(sds);
+
 		return State.SUCCESS;
 	}
 
 	@Override
-	public void clearValue() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		if (sds != null) {
 			sds.clear();

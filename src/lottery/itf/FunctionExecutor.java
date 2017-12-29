@@ -17,7 +17,7 @@ public interface FunctionExecutor {
 	 * @return if function has already installed return false,<br>
 	 *         otherwise return true.
 	 */
-	boolean installFunction(Function function);
+	boolean install(Function function);
 
 	/**
 	 * uninstall all.
@@ -32,26 +32,19 @@ public interface FunctionExecutor {
 	Function getFunction();
 
 	/**
-	 * set cancel identifier.
+	 * set whether cancel execution.
 	 * 
 	 * @param b
 	 */
 	void cancel(boolean b);
 
 	/**
-	 * return canncel identifier.
+	 * return whether executor is cancelled.
 	 * 
 	 * @return user cancelled this execution return true, <br>
 	 *         otherwise return false.
 	 */
 	boolean cancelled();
-
-	/**
-	 * get default result.
-	 * 
-	 * @return
-	 */
-	Result getResult();
 
 	/**
 	 * get result of execution specified by identifier.

@@ -25,11 +25,12 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
-import lottery.function.shortterm.Function7;
-import lottery.function.shortterm.Function7.Popular;
+import lottery.function.shortterm.PopularDeviationStatistic;
+import lottery.function.shortterm.PopularDeviationStatistic.Popular;
 import lottery.model.DoubleChromosphere;
 import lottery.util.Context;
 import lottery.util.LotteryConst;
+import lottery.util.Utilities;
 import lottery.view.renderer.LotteryTableRenderer;
 import lottery.view.table.DefaultTable;
 
@@ -49,7 +50,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.TextAnchor;
 
-public class Func7InTableFrame extends JFrame {
+public class PopularInTableFrame extends JFrame {
 	/**
 	 * 
 	 */
@@ -117,17 +118,17 @@ public class Func7InTableFrame extends JFrame {
 				return p.getDc().getRedString();
 			case 3:
 				return new StringBuilder()
-						.append(LotteryConst.getAlignString(p.getMissNumber()[0]))
+						.append(Utilities.getAlignString(p.getBallMissCount()[0]))
 						.append("-")
-						.append(LotteryConst.getAlignString(p.getMissNumber()[1]))
+						.append(Utilities.getAlignString(p.getBallMissCount()[1]))
 						.append("-")
-						.append(LotteryConst.getAlignString(p.getMissNumber()[2]))
+						.append(Utilities.getAlignString(p.getBallMissCount()[2]))
 						.append("-")
-						.append(LotteryConst.getAlignString(p.getMissNumber()[3]))
+						.append(Utilities.getAlignString(p.getBallMissCount()[3]))
 						.append("-")
-						.append(LotteryConst.getAlignString(p.getMissNumber()[4]))
+						.append(Utilities.getAlignString(p.getBallMissCount()[4]))
 						.append("-")
-						.append(LotteryConst.getAlignString(p.getMissNumber()[5]))
+						.append(Utilities.getAlignString(p.getBallMissCount()[5]))
 						.toString();
 			case 4:
 				return p.getHotNumberCount();
@@ -144,8 +145,10 @@ public class Func7InTableFrame extends JFrame {
 	JTable table;
 	List<Popular> popular;
 	int issue;
+	int averageHotCount;
+	int averageMissCount;
 
-	public Func7InTableFrame(List<Popular> popular, int issue) {
+	public PopularInTableFrame(List<Popular> popular, int issue) {
 		// TODO Auto-generated constructor stub
 		this.popular = new ArrayList<Popular>(popular);
 		this.issue = issue;
@@ -223,7 +226,7 @@ public class Func7InTableFrame extends JFrame {
 		JScrollPane jsp = new JScrollPane();
 		jsp.setViewportView(table);
 
-		Function7 f = new Function7();
+		PopularDeviationStatistic f = new PopularDeviationStatistic();
 		List<DoubleChromosphere> dcs = Context.getInstance().getLotteryList();
 		int size = dcs.size();
 		f.invoke(dcs);
@@ -233,6 +236,7 @@ public class Func7InTableFrame extends JFrame {
 		for (Popular p : tp) {
 			total += p.getHotNumberCount();
 		}
+		averageHotCount = total / size;
 		double rate = total * 1.0d / size;
 		String hotRate = LotteryConst.DF.format(rate);
 		JLabel label = new JLabel("遗漏少于10次的数字的历史平均值：" + hotRate);
@@ -242,6 +246,7 @@ public class Func7InTableFrame extends JFrame {
 		for (Popular p : tp) {
 			total += p.getMissCount();
 		}
+		averageMissCount = total / size;
 		rate = total * 1.0d / size;
 		hotRate = LotteryConst.DF.format(rate);
 		JLabel label1 = new JLabel("遗漏总数历史平均值：" + hotRate);
@@ -269,6 +274,10 @@ public class Func7InTableFrame extends JFrame {
 
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		getContentPane().add(wrap, BorderLayout.SOUTH);
+
+		// release function
+		f.reset();
+		f = null;
 	}
 
 	private String getRedBallMiss(int[] value) {
@@ -285,7 +294,7 @@ public class Func7InTableFrame extends JFrame {
 		buf.append("<table border=\"1\">").append("\n");
 		buf.append("<tr>").append("\n");
 		for (int i = 1; i <= LotteryConst.RED_BALL_COUNT; i++) {
-			buf.append("<td>").append(LotteryConst.getAlignString(i))
+			buf.append("<td>").append(Utilities.getAlignString(i))
 					.append("</td>");
 		}
 		buf.append("\n").append("</tr>").append("\n");
@@ -296,10 +305,10 @@ public class Func7InTableFrame extends JFrame {
 			miss = value[i];
 			if (miss == 0) {
 				buf.append("<td>").append("<div style=\"color:red\">")
-						.append(LotteryConst.getAlignString(miss))
+						.append(Utilities.getAlignString(miss))
 						.append("</div>").append("</td>");
 			} else {
-				buf.append("<td>").append(LotteryConst.getAlignString(miss))
+				buf.append("<td>").append(Utilities.getAlignString(miss))
 						.append("</td>");
 			}
 		}
@@ -335,8 +344,10 @@ public class Func7InTableFrame extends JFrame {
 		buf.append("<table border=\"1\">").append("\n");
 
 		buf.append("<tr>").append("\n");
-		buf.append("<td align=\"center\">").append("遗漏次数").append("</td>").append("\n");
-		buf.append("<td align=\"center\">").append("遗漏球号").append("</td>").append("\n");
+		buf.append("<td align=\"center\">").append("遗漏次数").append("</td>")
+				.append("\n");
+		buf.append("<td align=\"center\">").append("遗漏球号").append("</td>")
+				.append("\n");
 		buf.append("</tr>").append("\n");
 
 		Iterator<Integer> keys = map.keySet().iterator();
@@ -345,7 +356,7 @@ public class Func7InTableFrame extends JFrame {
 			key = keys.next();
 			buf.append("<tr>").append("\n");
 			buf.append("<td align=\"center\">")
-					.append(LotteryConst.getAlignString(key)).append("</td>")
+					.append(Utilities.getAlignString(key)).append("</td>")
 					.append("\n");
 			buf.append("<td align=\"left\">")
 					.append(Arrays.toString(map.get(key)
@@ -382,21 +393,10 @@ public class Func7InTableFrame extends JFrame {
 			return;
 		}
 
-		Function7 f = new Function7();
-		f.invoke(Context.getInstance().getLotteryList());
-		List<Popular> tp = (List<Popular>) f.getResult(
-				LotteryConst.DEFAULT_IDENTIFIER).getValue();
-		int size = Context.getInstance().getLotteryList().size();
-		int total = 0;
-		for (Popular p : tp) {
-			total += p.getHotNumberCount();
-		}
-		int count = total / size;
-
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (Popular p : value) {
-			dataset.addValue(p.getHotNumberCount() - count, "遗漏少于10次", p
-					.getDc().getIssue());
+			dataset.addValue(p.getHotNumberCount() - averageHotCount,
+					"遗漏少于10次", p.getDc().getIssue());
 		}
 		JFreeChart chart = ChartFactory.createBarChart("遗漏少于10次统计图", // chart
 				"期数", // domain axis label
@@ -417,21 +417,10 @@ public class Func7InTableFrame extends JFrame {
 			return;
 		}
 
-		Function7 f = new Function7();
-		f.invoke(Context.getInstance().getLotteryList());
-		List<Popular> tp = (List<Popular>) f.getResult(
-				LotteryConst.DEFAULT_IDENTIFIER).getValue();
-		int size = Context.getInstance().getLotteryList().size();
-		int total = 0;
-		for (Popular p : tp) {
-			total += p.getMissCount();
-		}
-		int count = total / size;
-
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (Popular p : value) {
-			dataset.addValue(p.getMissCount() - count, "遗漏次数", p.getDc()
-					.getIssue());
+			dataset.addValue(p.getMissCount() - averageMissCount, "遗漏次数", p
+					.getDc().getIssue());
 		}
 		JFreeChart chart = ChartFactory.createBarChart("遗漏次数统计图", // chart
 				"期数", // domain axis label

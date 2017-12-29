@@ -6,35 +6,39 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import lottery.function.FunctionResult;
-import lottery.function.shortterm.Function6;
-import lottery.function.shortterm.Function6.Area;
+import lottery.function.shortterm.NumberAreaDeviationStatistic;
+import lottery.function.shortterm.NumberAreaDeviationStatistic.Area;
 import lottery.itf.Function;
+import lottery.itf.Result;
 import lottery.util.LotteryConst;
-import lottery.view.funcview.Func6InTableFrame;
+import lottery.view.funcview.NumberAreaInTableFrame;
+import lottery.view.menu.ShortTermMenu;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Func6TableMenu extends ShortTermMenu {
+public class NumberAreaTableMenu extends ShortTermMenu {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6912497808548053935L;
 	JLabel areaLabel;
 	JTextField areaField;
-	int area;
+	int areaCount;
 
-	public Func6TableMenu() {
-		// TODO Auto-generated constructor stub
+	public NumberAreaTableMenu() {
 		super();
-		setName("Func6TableMenu");
-		setText("数字区间偏差");
-
-		function = new Function6();
 	}
 
 	protected void initialize() {
 		super.initialize();
+		setName("NumberAreaTableMenu");
+		setText("数字区间偏差");
+		function = new NumberAreaDeviationStatistic();
 		areaLabel = new JLabel("区间：");
 		areaField = new JTextField(5);
 		areaField.setText("3");
+		areaLabel.setOpaque(false);
 	}
 
 	protected void build() {
@@ -51,37 +55,37 @@ public class Func6TableMenu extends ShortTermMenu {
 	}
 
 	@Override
-	public void showChart(FunctionResult fr) {
+	public void showGraphics(Result result) {
 		// TODO Auto-generated method stub
-		Func6InTableFrame frame = new Func6InTableFrame(
-				(List<Area>) fr.getValue(), end - issue);
+		NumberAreaInTableFrame frame = new NumberAreaInTableFrame(
+				(List<Area>) result.getValue(), length);
 		frame.display();
 	}
-	
+
 	@Override
-	protected void prepare() {
+	protected void handleUserInput() {
 		// TODO Auto-generated method stub
-		super.prepare();
-		area = 3;
+		super.handleUserInput();
+		areaCount = 3;
 		String s = areaField.getText();
 		if (StringUtils.isBlank(s)) {
 		} else {
 			try {
-				area = Integer.parseInt(s);
+				areaCount = Integer.parseInt(s);
 			} catch (Exception e2) {
 				// TODO: handle exception
 				e2.printStackTrace();
 			}
 		}
-		if (area < 0 || area > LotteryConst.RED_BALL_COUNT) {
-			area = 3;
+		if (areaCount < 0 || areaCount > LotteryConst.RED_BALL_COUNT) {
+			areaCount = 3;
 		}
 	}
 
 	@Override
-	protected Function getFunction() {
+	protected void prepareFunctionWithUserInput(Function f) {
 		// TODO Auto-generated method stub
-		((Function6) function).setAreaCount(area);
-		return function;
+		f.setProperty(NumberAreaDeviationStatistic.PROPERTY_AREA_COUNT,
+				areaCount);
 	}
 }

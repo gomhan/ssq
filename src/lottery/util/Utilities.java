@@ -33,4 +33,7 @@ public class Utilities {
 		return tpe;
 	}
 
+	public static String getAlignString(int i) {
+		return i < 10 ? "0" + i : Integer.toString(i);
+	}
 }

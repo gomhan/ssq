@@ -4,7 +4,7 @@ import java.awt.Window;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import lottery.itf.FunctionExecutor;
+import lottery.function.DefaultFunctionExecutor;
 import lottery.model.DoubleChromosphere;
 import lottery.model.LotteryModel;
 import lottery.view.LotteryWindow;
@@ -46,8 +46,8 @@ public final class Context {
 		return null;
 	}
 
-	public FunctionExecutor getExecutor() {
-		return (FunctionExecutor) _cache.get(EXECUTOR);
+	public DefaultFunctionExecutor getDefaultExecutor() {
+		return (DefaultFunctionExecutor) _cache.get(EXECUTOR);
 	}
 
 	public LotteryWindow getMainFrame() {

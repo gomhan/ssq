@@ -1,9 +1,13 @@
 package lottery.model;
 
 import java.util.List;
+import java.util.Map;
+
+import lottery.itf.Function;
 
 public class LotteryModel {
 
+	private Map<Identifier, Function> functions;
 	private List<DoubleChromosphere> lottery;
 
 	public LotteryModel() {

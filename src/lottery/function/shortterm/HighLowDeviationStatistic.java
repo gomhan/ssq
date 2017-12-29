@@ -5,10 +5,11 @@ import java.util.List;
 
 import lottery.function.AbstractFunction;
 import lottery.model.DoubleChromosphere;
+import lottery.model.Identifier;
 import lottery.model.State;
 import lottery.util.LotteryConst;
 
-public class Function4 extends AbstractFunction {
+public class HighLowDeviationStatistic extends AbstractFunction {
 
 	public static class LowHighNumber {
 		String issue;
@@ -36,18 +37,20 @@ public class Function4 extends AbstractFunction {
 
 	private List<LowHighNumber> number;
 
-	public Function4() {
+	public HighLowDeviationStatistic() {
 		// TODO Auto-generated constructor stub
 		super();
-		name = "Function4";
+		id = Identifier.createIdentifier(LotteryConst.SHORT_TERM_OFFSET | 2);
+		name = "HighLowDeviationStatistic";
 		describe = "´óÐ¡Æ«²î";
 		number = new ArrayList<LowHighNumber>();
+		getDefaultResult().setValue(number);
 	}
 
 	@Override
-	public State invoke(List<DoubleChromosphere> parameter) {
+	public State calculate(List<DoubleChromosphere> parameter) {
 		// TODO Auto-generated method stub
-		clearValue();
+		reset();
 		LowHighNumber oe;
 		for (DoubleChromosphere dc : parameter) {
 			oe = new LowHighNumber();
@@ -85,12 +88,12 @@ public class Function4 extends AbstractFunction {
 			}
 			number.add(oe);
 		}
-		fr.setValue(number);
+		
 		return State.SUCCESS;
 	}
 
 	@Override
-	public void clearValue() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		if (number != null) {
 			number.clear();

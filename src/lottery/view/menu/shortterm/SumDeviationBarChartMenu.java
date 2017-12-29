@@ -9,15 +9,14 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import lottery.function.FunctionResult;
-import lottery.function.shortterm.Function5;
-import lottery.function.shortterm.Function5.SummationDeviation;
-import lottery.itf.Function;
+import lottery.function.shortterm.SummationDeviationStatistic;
+import lottery.function.shortterm.SummationDeviationStatistic.SummationDeviation;
+import lottery.itf.Result;
+import lottery.view.menu.ShortTermMenu;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
@@ -31,23 +30,33 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.TextAnchor;
 
-public class Func5BarChartMenu extends ShortTermMenu {
+public class SumDeviationBarChartMenu extends ShortTermMenu {
 
-	public Func5BarChartMenu() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6064810859984901933L;
+
+	public SumDeviationBarChartMenu() {
 		// TODO Auto-generated constructor stub
 		super();
-		setName("Func5BarChartMenu");
-		setText("和数值偏差");
-		
-		field.setText("40");
-		function = new Function5();
 	}
 
 	@Override
-	public void showChart(FunctionResult fr) {
+	protected void initialize() {
 		// TODO Auto-generated method stub
-		final JFreeChart chart = createChart(fr);
-		int size = ((List<SummationDeviation>) fr.getValue()).size();
+		super.initialize();
+		setName("SumDeviationBarChartMenu");
+		setText("和数值偏差");
+		function = new SummationDeviationStatistic();
+		field.setText("40");
+	}
+
+	@Override
+	public void showGraphics(Result result) {
+		// TODO Auto-generated method stub
+		final JFreeChart chart = createChart(result);
+		int size = ((List<SummationDeviation>) result.getValue()).size();
 		int length = size % 10 == 0 ? size / 10 : size / 10 + 1;
 		int width = length * 250;
 		if (width < 1024) {
@@ -57,7 +66,7 @@ public class Func5BarChartMenu extends ShortTermMenu {
 				width, 768, true, false, false, false, false, true, true);
 		JScrollPane jsp = new JScrollPane(cp);
 
-		final JFrame frame = new JFrame("和数值偏差_[" + (end - issue) + "期]");
+		final JFrame frame = new JFrame("和数值偏差_[" + this.length + "期]");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(jsp);
 		frame.setSize(1280, 850);
@@ -65,17 +74,12 @@ public class Func5BarChartMenu extends ShortTermMenu {
 		frame.setVisible(true);
 	}
 
-	@Override
-	protected Function getFunction() {
-		// TODO Auto-generated method stub
-		return function;
-	}
-
-	private JFreeChart createChart(FunctionResult fr) {
-		List<SummationDeviation> sds = (List<SummationDeviation>) fr.getValue();
+	private JFreeChart createChart(Result result) {
+		List<SummationDeviation> sds = (List<SummationDeviation>) result.getValue();
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (SummationDeviation sd : sds) {
-			dataset.addValue(sd.getSd(), "和数值偏差", sd.getIssue() + " - ["+sd.getSummation()+"]");
+			dataset.addValue(sd.getSd(), "和数值偏差",
+					sd.getIssue() + " - [" + sd.getSummation() + "]");
 		}
 		JFreeChart chart = ChartFactory.createBarChart("和数值分布图", // chart
 				"期数", // domain axis label

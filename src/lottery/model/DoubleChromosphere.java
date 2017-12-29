@@ -1,7 +1,7 @@
 package lottery.model;
 
 import lottery.itf.NumericLottery;
-import lottery.util.LotteryConst;
+import lottery.util.Utilities;
 
 /**
  * 6 on 33 with one special number
@@ -34,13 +34,12 @@ public class DoubleChromosphere implements NumericLottery,
 	}
 
 	public String getRedString() {
-		return new StringBuilder().append(LotteryConst.getAlignString(red1))
-				.append(",").append(LotteryConst.getAlignString(red2))
-				.append(",").append(LotteryConst.getAlignString(red3))
-				.append(",").append(LotteryConst.getAlignString(red4))
-				.append(",").append(LotteryConst.getAlignString(red5))
-				.append(",").append(LotteryConst.getAlignString(red6))
-				.toString();
+		return new StringBuilder().append(Utilities.getAlignString(red1))
+				.append(",").append(Utilities.getAlignString(red2)).append(",")
+				.append(Utilities.getAlignString(red3)).append(",")
+				.append(Utilities.getAlignString(red4)).append(",")
+				.append(Utilities.getAlignString(red5)).append(",")
+				.append(Utilities.getAlignString(red6)).toString();
 	}
 
 	@Override

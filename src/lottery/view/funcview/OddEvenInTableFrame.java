@@ -14,17 +14,18 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
-import lottery.function.shortterm.Function4.LowHighNumber;
+import lottery.function.shortterm.OddEvenDeviationStatistic;
+import lottery.function.shortterm.OddEvenDeviationStatistic.OddEvenNumber;
 import lottery.view.renderer.LotteryTableRenderer;
 import lottery.view.table.DefaultTable;
 
-public class Func4InTableFrame extends JFrame {
+public class OddEvenInTableFrame extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5488159906591486152L;
 
-	class Func4TableModel extends AbstractTableModel {
+	class Func3TableModel extends AbstractTableModel {
 
 		/**
 		 * 
@@ -52,9 +53,9 @@ public class Func4InTableFrame extends JFrame {
 			case 1:
 				return "奖球";
 			case 2:
-				return "小数";
+				return "奇数";
 			case 3:
-				return "大数 ";
+				return "偶数 ";
 			default:
 				break;
 			}
@@ -70,16 +71,16 @@ public class Func4InTableFrame extends JFrame {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO Auto-generated method stub
-			LowHighNumber b = number.get(rowIndex);
+			OddEvenNumber b = number.get(rowIndex);
 			switch (columnIndex) {
 			case 0:
 				return b.getIssue();
 			case 1:
 				return b.getNumberString();
 			case 2:
-				return b.getLowNumber();
+				return b.getOddNumber();
 			case 3:
-				return b.getHighNumber();
+				return b.getEvenNumber();
 			default:
 				break;
 			}
@@ -91,14 +92,14 @@ public class Func4InTableFrame extends JFrame {
 	JLabel l3;
 	JLabel l1;
 	JLabel l2;
-	List<LowHighNumber> number;
-	int totalLowCount;
-	int totalHighCount;
+	List<OddEvenDeviationStatistic.OddEvenNumber> number;
+	int totalOddCount;
+	int totalEvenCount;
 
-	public Func4InTableFrame(List<LowHighNumber> number, int issue) {
+	public OddEvenInTableFrame(List<OddEvenNumber> number, int issue) {
 		// TODO Auto-generated constructor stub
-		this.number = new ArrayList<LowHighNumber>(number);
-		setTitle("大小偏差_[" + issue + "期]");
+		this.number = new ArrayList<OddEvenNumber>(number);
+		setTitle("奇偶偏差_[" + issue + "期]");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		initialize();
 		build();
@@ -106,7 +107,7 @@ public class Func4InTableFrame extends JFrame {
 
 	private void initialize() {
 		// TODO Auto-generated method stub
-		Func4TableModel model = new Func4TableModel();
+		Func3TableModel model = new Func3TableModel();
 		table = new DefaultTable();
 		table.setModel(model);
 		LotteryTableRenderer renderer = new LotteryTableRenderer();
@@ -114,29 +115,29 @@ public class Func4InTableFrame extends JFrame {
 			table.getColumnModel().getColumn(i).setCellRenderer(renderer);
 		}
 
-		TableRowSorter<Func4TableModel> sorter = new TableRowSorter<Func4TableModel>(
+		TableRowSorter<Func3TableModel> sorter = new TableRowSorter<Func3TableModel>(
 				model);
 		sorter.setSortable(0, false);
 		sorter.setSortable(1, false);
 		table.setRowSorter(sorter);
-
-		for (LowHighNumber oe : number) {
-			totalHighCount += oe.getHighNumber();
-			totalLowCount += oe.getLowNumber();
+		
+		for (OddEvenNumber oe : number) {
+			totalEvenCount += oe.getEvenNumber();
+			totalOddCount += oe.getOddNumber();
 		}
 
-		l1 = new JLabel("小数个数: " + totalLowCount);
-		l2 = new JLabel("大数个数: " + totalHighCount);
-		l3 = new JLabel("大小偏差： " + getTotalString());
+		l1 = new JLabel("奇数个数: " + totalOddCount);
+		l2 = new JLabel("偶数个数: " + totalEvenCount);
+		l3 = new JLabel("奇偶偏差： " + getTotalString());
 	}
-
+	
 	private String getTotalString() {
-		if (totalLowCount > totalHighCount) {
-			return "L = +" + (totalLowCount - totalHighCount);
-		} else if (totalLowCount < totalHighCount) {
-			return "H = +" + (totalHighCount - totalLowCount);
+		if (totalOddCount > totalEvenCount) {
+			return "O = +"+(totalOddCount - totalEvenCount);
+		} else if (totalOddCount < totalEvenCount){
+			return "E = +"+(totalEvenCount - totalOddCount);
 		} else {
-			return "H = L = +0";
+			return "E = O = +0";
 		}
 	}
 
@@ -144,14 +145,14 @@ public class Func4InTableFrame extends JFrame {
 		// TODO Auto-generated method stub
 		JScrollPane jsp = new JScrollPane();
 		jsp.setViewportView(table);
-
+		
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		p.add(l1);
 		p.add(Box.createHorizontalStrut(20));
 		p.add(l2);
 		p.add(Box.createHorizontalStrut(20));
 		p.add(l3);
-
+		
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		getContentPane().add(p, BorderLayout.SOUTH);
 	}
