@@ -1,5 +1,6 @@
 package lottery.function;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -91,6 +92,9 @@ public class ExecutionResult extends ObservableBean implements Result {
 	@Override
 	public void clearValue() {
 		Object obj = getValue();
+		if (obj == null) {
+			return;
+		}
 		if (obj instanceof Collection<?>) {
 			try {
 				((Collection<?>) obj).clear();
@@ -101,6 +105,13 @@ public class ExecutionResult extends ObservableBean implements Result {
 			try {
 				((Map<?, ?>) obj).clear();
 			} catch (UnsupportedOperationException e) {
+				// TODO: handle exception
+			}
+		} else if (obj.getClass().isArray()) {
+			try {
+				Object[] arr = (Object[]) obj;
+				Arrays.fill(arr, null);
+			} catch (Exception e) {
 				// TODO: handle exception
 			}
 		}

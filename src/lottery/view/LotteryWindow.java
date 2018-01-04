@@ -28,8 +28,10 @@ import lottery.util.XML;
 import lottery.view.menu.common.SummationBarChartMenu;
 import lottery.view.menu.common.SummationTableMenu;
 import lottery.view.menu.common.WinningNumberTableMenu;
+import lottery.view.menu.shortterm.LpNumberTableMenu;
 import lottery.view.menu.shortterm.OddEvenTableMenu;
 import lottery.view.menu.shortterm.HighLowTableMenu;
+import lottery.view.menu.shortterm.PercentTableMenu;
 import lottery.view.menu.shortterm.SumDeviationBarChartMenu;
 import lottery.view.menu.shortterm.NumberAreaTableMenu;
 import lottery.view.menu.shortterm.PopularTableMenu;
@@ -185,6 +187,12 @@ public class LotteryWindow extends JFrame {
 		menu.add(m);
 		menu.addSeparator();
 		m = new MissTableMenu();
+		menu.add(m);
+		menu.addSeparator();
+		m = new LpNumberTableMenu();
+		menu.add(m);
+		menu.addSeparator();
+		m = new PercentTableMenu();
 		menu.add(m);
 	}
 

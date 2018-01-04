@@ -6,8 +6,8 @@ import lottery.model.DoubleChromosphere;
 import lottery.model.State;
 
 /**
- * This interface represent a kind of execution process. After {@code invoke}
- * method called, user can get execution {@link Result}.
+ * This interface represent a execution process. After {@code invoke} method
+ * called, user can get function {@link Result}.
  */
 public interface Function extends ResultSet {
 

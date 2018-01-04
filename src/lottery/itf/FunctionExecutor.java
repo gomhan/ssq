@@ -20,7 +20,7 @@ public interface FunctionExecutor {
 	boolean install(Function function);
 
 	/**
-	 * uninstall all.
+	 * uninstall
 	 */
 	void uninstall();
 

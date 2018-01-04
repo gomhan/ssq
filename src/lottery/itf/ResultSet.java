@@ -6,25 +6,22 @@ package lottery.itf;
 public interface ResultSet {
 
 	ResultSet NULL = new ResultSet() {
+		@Override
 		public Result getResult(int identifier) {
-			throw new UnsupportedOperationException();
+			return null;
 		}
 
+		@Override
 		public void setResult(int identifier, Result result) {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public Result removeResult(int identifier) {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
+			return null;
 		}
 
 		@Override
 		public void clearResult() {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
 		}
 	};
 

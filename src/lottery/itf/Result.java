@@ -13,38 +13,29 @@ public interface Result {
 
 		@Override
 		public void setValue(Object value) {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public Object getValue() {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
+			return null;
 		}
 
 		@Override
 		public boolean invalid() {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
 		@Override
 		public void setChecker(Checker checker) {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public Checker getChecker() {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
+			return null;
 		}
 
 		@Override
 		public void clearValue() {
-			// TODO Auto-generated method stub
-			throw new UnsupportedOperationException();
 		}
 	};
 

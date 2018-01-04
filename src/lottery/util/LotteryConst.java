@@ -58,4 +58,6 @@ public class LotteryConst {
 	public static final int LONG_TERM_OFFSET = 0x30;
 	/** define customize function offset, begin at 0x100 */
 	public static final int CUSTOMIZE_OFFSET = 0x100;
+	/** last place number count */
+	public static final int LAST_COUNT = 10;
 }
