@@ -24,12 +24,12 @@ public class DefaultTable extends JTable implements ActionListener {
 	public DefaultTable() {
 		// TODO Auto-generated constructor stub
 		super();
-		initComponent();
+		initTableHeader();
 		initListener();
 		initPopMenu();
 	}
 
-	protected void initComponent() {
+	protected void initTableHeader() {
 		// TODO Auto-generated method stub
 		JTableHeader jth = getTableHeader();
 		jth.setReorderingAllowed(false);

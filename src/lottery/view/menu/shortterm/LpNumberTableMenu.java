@@ -6,9 +6,9 @@ import lottery.function.shortterm.LastPlaceDeviationStatistic;
 import lottery.function.shortterm.LastPlaceDeviationStatistic.LastNumber;
 import lottery.itf.Result;
 import lottery.view.funcview.LastPlaceInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
-public class LpNumberTableMenu extends ShortTermMenu {
+public class LpNumberTableMenu extends AbstractTermMenu {
 
 	public LpNumberTableMenu() {
 		super();

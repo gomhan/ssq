@@ -16,8 +16,9 @@ import lottery.util.LotteryConst;
 
 import org.apache.commons.lang3.StringUtils;
 
-public abstract class ShortTermMenu extends FunctionMenu {
+public abstract class AbstractTermMenu extends FunctionMenu {
 
+	private static final long serialVersionUID = 2981166432108705923L;
 	protected JTextField field;
 	protected JLabel label;
 	protected JLabel label2;
@@ -29,7 +30,7 @@ public abstract class ShortTermMenu extends FunctionMenu {
 	protected int offset;
 	protected int length;
 
-	public ShortTermMenu() {
+	public AbstractTermMenu() {
 		super();
 	}
 

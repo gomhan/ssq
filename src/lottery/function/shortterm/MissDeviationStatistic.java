@@ -184,21 +184,21 @@ public class MissDeviationStatistic extends AbstractFunction {
 	@Override
 	public boolean propertyInvalid() {
 		// TODO Auto-generated method stub
-		Object obj = properties.get(PROPERTY_MISS_COUNT);
+		Object obj = getProperty(PROPERTY_MISS_COUNT);
 		if (obj == null || !(obj instanceof Integer)) {
 			missCount = 5;
 		} else {
 			missCount = ((Integer) obj).intValue();
 		}
 
-		obj = properties.get(PROPERTY_OFFSET);
+		obj = getProperty(PROPERTY_OFFSET);
 		if (obj == null || !(obj instanceof Integer)) {
 			offset = 0;
 		} else {
 			offset = ((Integer) obj).intValue();
 		}
 
-		obj = properties.get(PROPERTY_LENGTH);
+		obj = getProperty(PROPERTY_LENGTH);
 		if (obj == null || !(obj instanceof Integer)) {
 			length = 10;
 		} else {

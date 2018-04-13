@@ -199,7 +199,7 @@ public class PopularInTableFrame extends JFrame {
 		table.setModel(model);
 		LotteryTableRenderer renderer = new LotteryTableRenderer() {
 			@Override
-			protected void customizeRenderer(JTable table, Object value,
+			protected void customizeUnSelectedRenderer(JTable table, Object value,
 					boolean isSelected, boolean hasFocus, int row, int column,
 					Component renderComponent) {
 				// TODO Auto-generated method stub

@@ -92,7 +92,7 @@ public class PopularDeviationStatistic extends AbstractFunction {
 	@Override
 	public boolean propertyInvalid() {
 		// TODO Auto-generated method stub
-		Object obj = properties.get(PROPERTY_OFFSET);
+		Object obj = getProperty(PROPERTY_OFFSET);
 		if (obj == null || !(obj instanceof Integer)) {
 			offset = 0;
 		} else {

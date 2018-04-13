@@ -17,8 +17,9 @@ public abstract class AbstractFunction extends ObservableBean implements
 	protected Object id;
 	protected String name;
 	protected String describe;
-	protected Map<String, Object> properties;
-	protected Map<Integer, Result> results;
+	
+	private Map<String, Object> properties;
+	private Map<Integer, Result> results;
 
 	public AbstractFunction() {
 		// TODO Auto-generated constructor stub

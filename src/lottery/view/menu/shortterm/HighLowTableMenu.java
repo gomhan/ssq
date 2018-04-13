@@ -6,9 +6,9 @@ import lottery.function.shortterm.HighLowDeviationStatistic;
 import lottery.function.shortterm.HighLowDeviationStatistic.LowHighNumber;
 import lottery.itf.Result;
 import lottery.view.funcview.HighLowInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
-public class HighLowTableMenu extends ShortTermMenu {
+public class HighLowTableMenu extends AbstractTermMenu {
 
 	/**
 	 * 

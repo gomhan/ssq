@@ -6,9 +6,9 @@ import lottery.function.shortterm.PercentDeviationStatistic;
 import lottery.function.shortterm.PercentDeviationStatistic.PercentNumber;
 import lottery.itf.Result;
 import lottery.view.funcview.PercentInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
-public class PercentTableMenu extends ShortTermMenu {
+public class PercentTableMenu extends AbstractTermMenu {
 
 	public PercentTableMenu() {
 		super();

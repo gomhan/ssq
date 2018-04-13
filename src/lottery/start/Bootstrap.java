@@ -21,18 +21,18 @@ import lottery.util.LotteryConst;
 import lottery.util.XML;
 import lottery.view.LotteryWindow;
 
-public class Start {
+public class Bootstrap {
 
-	public Start() {
+	public Bootstrap() {
 		// TODO Auto-generated constructor stub
 
 	}
 
-	public void startupWithExcel() {
-		String path = new StringBuilder()
-				.append(System.getProperty("user.dir"))
-				.append(File.separatorChar).append("ssqexcle_result.xls")
-				.toString();
+	private void startupWithExcel(String path) {
+//		String path = new StringBuilder()
+//				.append(System.getProperty("user.dir"))
+//				.append(File.separatorChar).append("ssqexcle_result.xls")
+//				.toString();
 		Excel excel = new Excel();
 		boolean b = excel.load(path);
 		if (b) {
@@ -55,9 +55,9 @@ public class Start {
 		}
 	}
 
-	public void startupWithXml() {
-		String path = new StringBuilder().append(LotteryConst.PROJECT_PATH)
-				.append("ssq.xml").toString();
+	private void startupWithXml(String path) {
+//		String path = new StringBuilder().append(LotteryConst.PROJECT_PATH)
+//				.append("ssq.xml").toString();
 		XML xml = new XML();
 		List<DoubleChromosphere> dcs = xml.parseLotteryXML(path);
 		if (dcs != null && dcs.size() > 0) {
@@ -78,6 +78,48 @@ public class Start {
 		} else {
 			System.out.println("load file failed.");
 		}
+	}
+	
+	public void start() {
+		String excel = new StringBuilder().append(System.getProperty("user.dir")).append(File.separatorChar)
+				.append("ssqexcle_result.xls").toString();
+
+		String xml = new StringBuilder().append(LotteryConst.PROJECT_PATH).append("ssq.xml").toString();
+
+		boolean readXml = false;
+		String path = null;
+		if (checkFile(xml)) {
+			path = xml;
+			readXml = true;
+		} else if (checkFile(excel)) {
+			path = excel;
+		} else {
+			System.exit(1);
+		}
+
+		if (readXml) {
+			startupWithXml(path);
+		} else {
+			startupWithExcel(path);
+		}
+
+	}
+	
+	private static boolean checkFile(String path) {
+		boolean b = false;
+		if (path == null || path.equals("")) {
+			return b;
+		}
+		try {
+			File file = new File(path);
+			if (file.exists() && file.isFile()) {
+				b = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return b;
 	}
 
 	public static void main(String[] args) {
@@ -113,6 +155,7 @@ public class Start {
 		UIManager.put("Table.dropLineColor", Color.black);
 		UIManager.put("Table.dropLineShortColor", Color.black);
 //		new Start().startupWithExcel();
-		new Start().startupWithXml();
+//		new Start().startupWithXml();
+		new Bootstrap().start();
 	}
 }

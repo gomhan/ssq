@@ -14,7 +14,7 @@ public class LotteryConst {
 	public static final DecimalFormat DF = new DecimalFormat("#.000");
 
 	/** default table cell back ground */
-	public static final Color TABLE_CELL_DEFUALT_BG = new Color(247, 248, 245);
+	public static final Color TABLE_CELL_DEFUALT_BG = new Color(230, 230, 230);
 	/** default color of back ground of component */
 	public static final Color COMPONENT_DEFAULT_BG = new Color(0xEF, 0xEF, 0xEF);
 
@@ -25,6 +25,9 @@ public class LotteryConst {
 	public static final int DEFAULT_IDENTIFIER = 0xFF;
 	/** count of red ball */
 	public static final int RED_BALL_COUNT = 33;
+
+	/** count of ball */
+	public static final int BALL_COUNT = 49;
 
 	/** main panel menu item index 0 */
 	public static final int MENU_INDEX_0 = 0;

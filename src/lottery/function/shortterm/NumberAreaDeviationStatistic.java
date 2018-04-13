@@ -88,7 +88,7 @@ public class NumberAreaDeviationStatistic extends AbstractFunction {
 	@Override
 	public boolean propertyInvalid() {
 		// TODO Auto-generated method stub
-		Object obj = properties.get(PROPERTY_AREA_COUNT);
+		Object obj = getProperty(PROPERTY_AREA_COUNT);
 		if (obj == null || !(obj instanceof Integer)) {
 			areaCount = 0;
 		} else {

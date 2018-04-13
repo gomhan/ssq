@@ -7,9 +7,9 @@ import lottery.function.shortterm.PopularDeviationStatistic.Popular;
 import lottery.itf.Function;
 import lottery.itf.Result;
 import lottery.view.funcview.PopularInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
-public class PopularTableMenu extends ShortTermMenu {
+public class PopularTableMenu extends AbstractTermMenu {
 
 	/**
 	 * 

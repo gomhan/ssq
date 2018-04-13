@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import lottery.function.shortterm.SummationDeviationStatistic;
 import lottery.function.shortterm.SummationDeviationStatistic.SummationDeviation;
 import lottery.itf.Result;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -30,7 +30,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.TextAnchor;
 
-public class SumDeviationBarChartMenu extends ShortTermMenu {
+public class SumDeviationBarChartMenu extends AbstractTermMenu {
 
 	/**
 	 * 

@@ -6,9 +6,9 @@ import lottery.function.shortterm.OddEvenDeviationStatistic;
 import lottery.function.shortterm.OddEvenDeviationStatistic.OddEvenNumber;
 import lottery.itf.Result;
 import lottery.view.funcview.OddEvenInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
-public class OddEvenTableMenu extends ShortTermMenu {
+public class OddEvenTableMenu extends AbstractTermMenu {
 
 	/**
 	 * 

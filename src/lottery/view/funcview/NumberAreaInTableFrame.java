@@ -96,11 +96,10 @@ public class NumberAreaInTableFrame extends JFrame {
 		table = new DefaultTable();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setModel(model);
-		LotteryTableRenderer renderer = new LotteryTableRenderer(){
+		LotteryTableRenderer renderer = new LotteryTableRenderer() {
 			@Override
-			protected void customizeRenderer(JTable table, Object value,
-					boolean isSelected, boolean hasFocus, int row, int column,
-					Component renderComponent) {
+			protected void customizeUnSelectedRenderer(JTable table, Object value, boolean isSelected, boolean hasFocus,
+					int row, int column, Component renderComponent) {
 				// TODO Auto-generated method stub
 				if (value.equals("-")) {
 					setBackground(Color.lightGray);
@@ -112,8 +111,7 @@ public class NumberAreaInTableFrame extends JFrame {
 			table.getColumnModel().getColumn(i).setMinWidth(100);
 		}
 
-		TableRowSorter<Func6TableModel> sorter = new TableRowSorter<Func6TableModel>(
-				model);
+		TableRowSorter<Func6TableModel> sorter = new TableRowSorter<Func6TableModel>(model);
 		sorter.setSortable(0, false);
 		table.setRowSorter(null);
 	}
@@ -123,7 +121,7 @@ public class NumberAreaInTableFrame extends JFrame {
 		JScrollPane jsp = new JScrollPane();
 		jsp.setViewportView(table);
 
-		JLabel label = new JLabel("最有可能在某一起中奖号码中出现的数字区间，是那些在过去5期至10期中最不活跃的数字区间。");
+		JLabel label = new JLabel("最有可能在某一期中奖号码中出现的数字区间，是那些在过去5期至10期中最不活跃的数字区间。");
 		label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		getContentPane().add(label, BorderLayout.SOUTH);

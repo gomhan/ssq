@@ -23,6 +23,9 @@ public class LotteryTableRenderer extends DefaultTableCellRenderer {
 		Component component = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, column);
 
+		prepareRenderer(table, value, isSelected, hasFocus, row, column,
+				component);
+
 		setHorizontalAlignment(SwingUtilities.CENTER);
 		if (isSelected) {
 			component.setForeground(Color.WHITE);
@@ -37,13 +40,18 @@ public class LotteryTableRenderer extends DefaultTableCellRenderer {
 			component.setBackground(LotteryConst.TABLE_CELL_DEFUALT_BG);
 		}
 
-		customizeRenderer(table, value, isSelected, hasFocus, row, column,
-				component);
+		customizeUnSelectedRenderer(table, value, isSelected, hasFocus, row,
+				column, component);
 
 		return component;
 	}
 
-	protected void customizeRenderer(JTable table, Object value,
+	protected void customizeUnSelectedRenderer(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column,
+			Component renderComponent) {
+	}
+
+	protected void prepareRenderer(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column,
 			Component renderComponent) {
 	}

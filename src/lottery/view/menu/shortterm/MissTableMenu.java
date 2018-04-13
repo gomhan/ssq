@@ -13,11 +13,11 @@ import lottery.itf.Result;
 import lottery.model.DoubleChromosphere;
 import lottery.util.Context;
 import lottery.view.funcview.MissInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class MissTableMenu extends ShortTermMenu {
+public class MissTableMenu extends AbstractTermMenu {
 
 	/**
 	 * 

@@ -54,7 +54,7 @@ public class ExecutionResult extends ObservableBean implements Result {
 	public void setResultKey(int resultKey) {
 		int old = this.resultKey;
 		this.resultKey = resultKey;
-		firePropertyChange("mark", old, resultKey);
+		firePropertyChange("resultKey", old, resultKey);
 	}
 
 	@Override

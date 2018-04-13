@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lottery" default="windows" basedir=".">
+
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="dist.dir" value="dist" />
+	<property name="lib.dir" value="lib" />
+	<property name="windows.dir" value="Windows_Builder/lottery" />
+	<property name="windows.lib.dir" value="Windows_Builder/lottery/lib" />
+	<property name="windows.log.dir" value="Windows_Builder/lottery/logs" />
+	<property name="windows.release.name" value="lottery" />
+
+	<property name="application" value="lottery" />
+	<property name="jarVer" value="1.0.1.0" />
+
+	<path id="classpath">
+		<pathelement path="build" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd" locale="us" />
+		</tstamp>
+	</target>
+
+	<target name="mkdir">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${windows.lib.dir}" />
+	</target>
+
+	<target name="compile" depends="mkdir" description="Compile java files">
+		<echo>Java/JVM version: ${ant.java.version}</echo>
+		<echo message="Java Compiler Version: ${java.version}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" fork="yes" debug="${javac.debug}" 
+			nowarn="${javac.nowarn}" deprecation="${javac.deprecation}" 
+			includeAntRuntime="no" compiler="javac1.8" source="1.8" target="1.8" 
+			memoryInitialSize="100m" memoryMaximumSize="200m">
+			<classpath refid="classpath" />
+		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/*" />
+				<exclude name="**/*.java" />
+				<exclude name="**/*.bak" />
+				<exclude name="**/*.old" />
+				<exclude name="**/*.jbx" />
+				<exclude name="**/*.mk" />
+				<exclude name="**/*.ksh" />
+				<exclude name="**/makefile" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package" depends="init">
+		<jar destfile="${dist.dir}/${ant.project.name}.jar">
+			<fileset dir="${build.dir}">
+				<include name="${ant.project.name}/**" />
+				<include name="${ant.project.name}/function/**" />
+				<include name="${ant.project.name}/itf/**" />
+				<include name="${ant.project.name}/model/**" />
+				<include name="${ant.project.name}/start/**" />
+				<include name="${ant.project.name}/util/**" />
+				<include name="${ant.project.name}/view/**" />
+				<include name="table/header/mtx/**" />
+				<include name="META-INF/**" />
+			</fileset>
+			<manifest>
+				<attribute name="Application" value="${application}" />
+				<attribute name="Version" value="${jarVer}" />
+				<attribute name="Release-Date" value="${TODAY}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="copyFile2Windows">
+		<copy todir="${windows.lib.dir}">
+			<fileset dir="${dist.dir}" />
+			<fileset dir="${lib.dir}">
+				<exclude name="**/zsource.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${windows.dir}">
+			<fileset dir=".">
+				<include name="ssq.xml" />
+				<include name="ssqexcle_result.xls" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean" description="Clean Work Directory">
+		<delete dir="${dist.dir}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${windows.lib.dir}" />
+		<delete dir="${windows.log.dir}" />
+		<delete>
+			<fileset dir="${windows.dir}">
+				<include name="ssq.xml" />
+				<include name="ssqexcle_result.xls" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="windows" depends="clean,compile,package,copyFile2Windows" />
+
+</project>

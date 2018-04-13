@@ -12,11 +12,11 @@ import lottery.itf.Function;
 import lottery.itf.Result;
 import lottery.util.LotteryConst;
 import lottery.view.funcview.NumberAreaInTableFrame;
-import lottery.view.menu.ShortTermMenu;
+import lottery.view.menu.AbstractTermMenu;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class NumberAreaTableMenu extends ShortTermMenu {
+public class NumberAreaTableMenu extends AbstractTermMenu {
 
 	/**
 	 * 

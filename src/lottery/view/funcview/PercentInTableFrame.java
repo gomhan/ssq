@@ -113,7 +113,7 @@ public class PercentInTableFrame extends JFrame {
 			final Color c = new Color(219, 252, 173);
 
 			@Override
-			protected void customizeRenderer(JTable table, Object value,
+			protected void customizeUnSelectedRenderer(JTable table, Object value,
 					boolean isSelected, boolean hasFocus, int row, int column,
 					Component renderComponent) {
 				// TODO Auto-generated method stub
