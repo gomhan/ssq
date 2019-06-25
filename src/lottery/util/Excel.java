@@ -55,8 +55,10 @@ public class Excel {
 			}
 		} catch (NullPointerException e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 
 		}

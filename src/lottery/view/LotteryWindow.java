@@ -13,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -27,9 +29,11 @@ import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
+import lottery.model.DoubleChromosphere;
 import lottery.model.LotteryModel;
 import lottery.model.LotteryTableModel;
 import lottery.util.Context;
+import lottery.util.Excel;
 import lottery.util.LotteryConst;
 import lottery.util.XML;
 import lottery.view.menu.common.SummationBarChartMenu;
@@ -236,8 +240,47 @@ public class LotteryWindow extends JFrame {
 		});
 		menu.add(m);
 		menu.addSeparator();
+		
+		m = new JMenuItem("excel导入");
+		m.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String path = new StringBuilder().append(System.getProperty("user.dir")).append(File.separatorChar)
+						.append("ssqexcle_result.xls").toString();
+				Excel excel = new Excel();
+				boolean b = excel.load(path);
+				if (b) {
+					model.setLottery(excel.result());
+					tableModel.fireTableDataChanged();
+				} else {
+					System.out.println("load excel failed.");
+				}
+				excel.uninstall();
+			}
+		});
+		menu.add(m);
+		
+		m = new JMenuItem("xml导入");
+		m.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String path = new StringBuilder().append(LotteryConst.PROJECT_PATH).append("ssq.xml").toString();
+				XML xml = new XML();
+				List<DoubleChromosphere> dcs = xml.parseLotteryXML(path);
+				if (dcs != null && dcs.size() > 0) {
+					model.setLottery(dcs);
+					tableModel.fireTableDataChanged();
+				} else {
+					System.out.println("load file failed.");
+				}
+			}
+		});
+		menu.add(m);
+		menu.addSeparator();
 
-		m = new JMenuItem("导出");
+		m = new JMenuItem("导出xml");
 		m.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

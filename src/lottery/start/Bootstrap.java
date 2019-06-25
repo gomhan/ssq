@@ -2,8 +2,7 @@ package lottery.start;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
@@ -16,9 +15,6 @@ import lottery.itf.FunctionExecutor;
 import lottery.model.DoubleChromosphere;
 import lottery.model.LotteryModel;
 import lottery.util.Context;
-import lottery.util.Excel;
-import lottery.util.LotteryConst;
-import lottery.util.XML;
 import lottery.view.LotteryWindow;
 
 public class Bootstrap {
@@ -28,99 +24,116 @@ public class Bootstrap {
 
 	}
 
-	private void startupWithExcel(String path) {
-//		String path = new StringBuilder()
-//				.append(System.getProperty("user.dir"))
-//				.append(File.separatorChar).append("ssqexcle_result.xls")
-//				.toString();
-		Excel excel = new Excel();
-		boolean b = excel.load(path);
-		if (b) {
-			FunctionExecutor fe = new DefaultFunctionExecutor();
-			Context.getInstance().putObject(Context.EXECUTOR, fe);
-			LotteryModel model = new LotteryModel();
-			model.setLottery(excel.result());
-			excel.uninstall();
-			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
-			final LotteryWindow window = new LotteryWindow(model);
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					window.display();
-				}
-			});
-		} else {
-			System.out.println("load file failed.");
-		}
-	}
+//	private void startupWithExcel(String path) {
+////		String path = new StringBuilder()
+////				.append(System.getProperty("user.dir"))
+////				.append(File.separatorChar).append("ssqexcle_result.xls")
+////				.toString();
+//		Excel excel = new Excel();
+//		boolean b = excel.load(path);
+//		if (b) {
+//			FunctionExecutor fe = new DefaultFunctionExecutor();
+//			Context.getInstance().putObject(Context.EXECUTOR, fe);
+//			LotteryModel model = new LotteryModel();
+//			model.setLottery(excel.result());
+//			excel.uninstall();
+//			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
+//			final LotteryWindow window = new LotteryWindow(model);
+//			SwingUtilities.invokeLater(new Runnable() {
+//				@Override
+//				public void run() {
+//					// TODO Auto-generated method stub
+//					window.display();
+//				}
+//			});
+//		} else {
+//			System.out.println("load file failed.");
+//		}
+//	}
 
-	private void startupWithXml(String path) {
-//		String path = new StringBuilder().append(LotteryConst.PROJECT_PATH)
-//				.append("ssq.xml").toString();
-		XML xml = new XML();
-		List<DoubleChromosphere> dcs = xml.parseLotteryXML(path);
-		if (dcs != null && dcs.size() > 0) {
-			FunctionExecutor fe = new DefaultFunctionExecutor();
-			Context.getInstance().putObject(Context.EXECUTOR, fe);
-			LotteryModel model = new LotteryModel();
-			model.setLottery(dcs);
-			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
-			final LotteryWindow window = new LotteryWindow(model);
-			Context.getInstance().putObject(Context.MAIN_FRAME, window);
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					window.display();
-				}
-			});
-		} else {
-			System.out.println("load file failed.");
-		}
-	}
+//	private void startupWithXml(String path) {
+////		String path = new StringBuilder().append(LotteryConst.PROJECT_PATH)
+////				.append("ssq.xml").toString();
+//		XML xml = new XML();
+//		List<DoubleChromosphere> dcs = xml.parseLotteryXML(path);
+//		if (dcs != null && dcs.size() > 0) {
+//			FunctionExecutor fe = new DefaultFunctionExecutor();
+//			Context.getInstance().putObject(Context.EXECUTOR, fe);
+//			LotteryModel model = new LotteryModel();
+//			model.setLottery(dcs);
+//			Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
+//			final LotteryWindow window = new LotteryWindow(model);
+//			Context.getInstance().putObject(Context.MAIN_FRAME, window);
+//			SwingUtilities.invokeLater(new Runnable() {
+//				@Override
+//				public void run() {
+//					// TODO Auto-generated method stub
+//					window.display();
+//				}
+//			});
+//		} else {
+//			System.out.println("load file failed.");
+//		}
+//	}
 	
-	public void start() {
-		String excel = new StringBuilder().append(System.getProperty("user.dir")).append(File.separatorChar)
-				.append("ssqexcle_result.xls").toString();
-
-		String xml = new StringBuilder().append(LotteryConst.PROJECT_PATH).append("ssq.xml").toString();
-
-		boolean readXml = false;
-		String path = null;
-		if (checkFile(xml)) {
-			path = xml;
-			readXml = true;
-		} else if (checkFile(excel)) {
-			path = excel;
-		} else {
-			System.exit(1);
-		}
-
-		if (readXml) {
-			startupWithXml(path);
-		} else {
-			startupWithExcel(path);
-		}
-
-	}
-	
-	private static boolean checkFile(String path) {
-		boolean b = false;
-		if (path == null || path.equals("")) {
-			return b;
-		}
-		try {
-			File file = new File(path);
-			if (file.exists() && file.isFile()) {
-				b = true;
+	private void startup() {
+		FunctionExecutor fe = new DefaultFunctionExecutor();
+		Context.getInstance().putObject(Context.EXECUTOR, fe);
+		LotteryModel model = new LotteryModel();
+		model.setLottery(new ArrayList<DoubleChromosphere>());
+		Context.getInstance().putObject(Context.LOTTERY_MODEL, model);
+		final LotteryWindow window = new LotteryWindow(model);
+		Context.getInstance().putObject(Context.MAIN_FRAME, window);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				window.display();
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return b;
+		});
 	}
+	
+//	public void start() {
+//		String excel = new StringBuilder().append(System.getProperty("user.dir")).append(File.separatorChar)
+//				.append("ssqexcle_result.xls").toString();
+//
+//		String xml = new StringBuilder().append(LotteryConst.PROJECT_PATH).append("ssq.xml").toString();
+//
+//		boolean readXml = false;
+//		String path = null;
+//		if (checkFile(xml)) {
+//			path = xml;
+//			readXml = true;
+//		} else if (checkFile(excel)) {
+//			path = excel;
+//		} else {
+//			System.exit(1);
+//		}
+//
+//		if (readXml) {
+//			startupWithXml(path);
+//		} else {
+//			startupWithExcel(path);
+//		}
+//
+//	}
+	
+//	private static boolean checkFile(String path) {
+//		boolean b = false;
+//		if (path == null || path.equals("")) {
+//			return b;
+//		}
+//		try {
+//			File file = new File(path);
+//			if (file.exists() && file.isFile()) {
+//				b = true;
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//		return b;
+//	}
 
 	public static void main(String[] args) {
 		try {
@@ -156,6 +169,7 @@ public class Bootstrap {
 		UIManager.put("Table.dropLineShortColor", Color.black);
 //		new Start().startupWithExcel();
 //		new Start().startupWithXml();
-		new Bootstrap().start();
+//		new Bootstrap().start();
+		new Bootstrap().startup();
 	}
 }
