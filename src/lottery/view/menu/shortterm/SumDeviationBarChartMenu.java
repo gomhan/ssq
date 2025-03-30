@@ -49,7 +49,7 @@ public class SumDeviationBarChartMenu extends AbstractTermMenu {
 		setName("SumDeviationBarChartMenu");
 		setText("ºÍÊýÖµÆ«²î");
 		function = new SummationDeviationStatistic();
-		field.setText("40");
+		field.setText("50");
 	}
 
 	@Override
